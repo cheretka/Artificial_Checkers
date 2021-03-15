@@ -1,74 +1,72 @@
 from Board import *
-from Minimax_algorithm import *
+import random
+import time
+
 
 # Function that takes a move from the user
-def move_player(board, human_letter):
-    print('Your turn')
+def move_player(board):
+    print('Turn  <' + board.current_player + '>  player')
+
+    possible_moves = board.get_possible_moves()
+    print("possible moves: ")
+    print(possible_moves)
+
     good_move = False
     while not good_move:
-        print("Which box (RowColumn)? : ")
-        move = int(input())
-        index = [(3 * (move // 10 - 1) + (move % 10)) - 1, human_letter]
-        good_move = board.make_move(index)
+        print("From which box to which [RowColumn RowColumn]? : ")
+        start, end = map(int, sys.stdin.readline().split())
+        move = [[start // 10, start % 10], [end // 10, end % 10]]
+        # print(move)
+        if move in possible_moves:
+            board.make_move(move)
+            good_move = True
+
 
 # Function that selects and takes a step for the bot
-def move_computer(board, AI_letter):
+def move_computer(board):
+    print('Turn  <' + board.current_player + '>  player')
     print('AI turn')
-    best_score, final_move = -10, -1
 
-    # start Minimax algorithm
     possible_moves = board.get_possible_moves()
-    for move in possible_moves:
-        board.make_move(move)
-        score = minimax(board, -1, AI_letter)
-        board.undo_move()
-        if score > best_score:
-            best_score, final_move = score, move
+    print("possible moves: ")
+    print(possible_moves)
 
-    board.make_move(final_move)
-
+    board.make_move( random.choice(possible_moves))
 
 
 if __name__ == "__main__":
 
-    print('Welcome to Tic Tac Toe!')
+    print('Welcome to English draughts (checkers)!')
     board = Board()
     board.print()
 
-    # determination for which mark the person and AI will play
-    human_letter = ''
-    while not (human_letter == 'X' or human_letter == 'O'):
-        print('Do you want to be \'X\' (moves first) or \'O\' ?')
-        human_letter = input().upper()
 
-    AI_letter = 'O' if human_letter == 'X' else 'X'
-    current_player = ['X', 'O']
+    # while board.check_win() is None:
+    #     move_player(board)
+    #     board.print()
+    #
+    # print("Win <" + board.check_win() + ">")
 
 
-    # game
-    index = 0
-    while True:
-        # player's move
-        if current_player[index % 2] == human_letter:
-            move_player(board, human_letter)
-        else:
-            move_computer(board, current_player[index % 2])
 
-        # show board
+    # x=0
+    # while board.check_win() is None:
+    #     if x%2 == 0:
+    #         move_player(board)
+    #     else:
+    #         move_computer(board)
+    #     board.print()
+    #     x +=1
+    #
+    # print("Win <" + board.check_win() + ">")
+
+
+
+    while board.check_win() is None:
+        move_computer(board)
         board.print()
+        time.sleep(1)
 
-        # checking if the game is over
-        win = board.check_win()
-        if (win == -1 and human_letter == 'O') or (win == 1 and human_letter == 'X'):
-            print('Hooray! You have won the game!')
-            break
-        elif (win == -1 and AI_letter == 'O') or (win == 1 and AI_letter == 'X'):
-            print('The computer has beaten you! You lose.')
-            break
-        elif win == 0:
-            print('The game is a tie!')
-            break
+    print("Win <" + board.check_win() + ">")
 
-        index += 1
 
-    print('End the game!')
