@@ -1,13 +1,13 @@
 from Board import *
 import random
 import time
-
+from Minimax import *
 
 # Function that takes a move from the user
 def move_player(board):
     print('Turn  <' + board.current_player + '>  player')
 
-    possible_moves = board.get_possible_moves()
+    possible_moves, order = board.get_possible_moves()
     print("possible moves: ")
     print(possible_moves)
 
@@ -23,15 +23,20 @@ def move_player(board):
 
 
 # Function that selects and takes a step for the bot
+def move_computer2(board):
+    print('Turn  <' + board.current_player + '>  player')
+    board.make_move(get_move(board))
+
+
 def move_computer(board):
     print('Turn  <' + board.current_player + '>  player')
     print('AI turn')
 
-    possible_moves = board.get_possible_moves()
+    possible_moves, order = board.get_possible_moves()
     print("possible moves: ")
     print(possible_moves)
 
-    board.make_move( random.choice(possible_moves))
+    board.make_move(random.choice(possible_moves))
 
 
 if __name__ == "__main__":
@@ -40,33 +45,28 @@ if __name__ == "__main__":
     board = Board()
     board.print()
 
-
-    # while board.check_win() is None:
+    # while board.get_win() is None:
     #     move_player(board)
     #     board.print()
     #
-    # print("Win <" + board.check_win() + ">")
-
-
+    # print("Win <" + board.get_win() + ">")
 
     # x=0
-    # while board.check_win() is None:
-    #     if x%2 == 0:
-    #         move_player(board)
-    #     else:
-    #         move_computer(board)
-    #     board.print()
-    #     x +=1
-    #
-    # print("Win <" + board.check_win() + ">")
-
-
-
-    while board.check_win() is None:
-        move_computer(board)
+    while board.get_win() is None:
+        if board.whose_turn() == 'r':
+            move_computer2(board)
+        else:
+            move_computer2(board)
         board.print()
-        time.sleep(1)
+        time.sleep(0.2)
 
-    print("Win <" + board.check_win() + ">")
+    print("Win <" + board.get_win() + ">")
 
 
+    # print(board.get_win())
+    # while board.get_win() is None:
+    #     move_computer(board)
+    #     board.print()
+    #     time.sleep(0.2)
+    #
+    # print("Win <" + board.get_win() + ">")
