@@ -59,9 +59,9 @@ def get_move(board):
     for move in possible_moves:
         board.make_move(move)
         if board.whose_turn() == AI:
-            score = minimax(board, 1, AI, 11)
+            score = minimax(board, 1, AI, 12)
         else:
-            score = minimax(board, -1, AI, 11)
+            score = minimax(board, -1, AI, 12)
         board.undo_move()
 
         if score == best_score:
