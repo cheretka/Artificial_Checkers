@@ -6,21 +6,21 @@ import copy
 class Checkers:
 
     def __init__(self):
-        # self.board = [[' ', 'r', ' ', 'r', ' ', 'r', ' ', 'r'],
-        #               ['r', ' ', 'r', ' ', 'r', ' ', 'r', ' '],
-        #               [' ', 'r', ' ', 'r', ' ', 'r', ' ', 'r'],
-        #               [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        #               [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        #               ['a', ' ', 'a', ' ', 'a', ' ', 'a', ' '],
-        #               [' ', 'a', ' ', 'a', ' ', 'a', ' ', 'a'],
-        #               ['a', ' ', 'a', ' ', 'a', ' ', 'a', ' ']]
-        self.board = [[' ', 'r', ' ', 'r', ' ', 'r'],
-                      ['r', ' ', 'r', ' ', 'r', ' '],
-                      [' ', ' ', ' ', ' ', ' ', ' '],
-                      [' ', ' ', ' ', ' ', ' ', ' '],
-                      [' ', 'a', ' ', 'a', ' ', 'a'],
-                      ['a', ' ', 'a', ' ', 'a', ' ']]
-        self.length = 6
+        self.board = [[' ', 'r', ' ', 'r', ' ', 'r', ' ', 'r'],
+                      ['r', ' ', 'r', ' ', 'r', ' ', 'r', ' '],
+                      [' ', 'r', ' ', 'r', ' ', 'r', ' ', 'r'],
+                      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                      ['a', ' ', 'a', ' ', 'a', ' ', 'a', ' '],
+                      [' ', 'a', ' ', 'a', ' ', 'a', ' ', 'a'],
+                      ['a', ' ', 'a', ' ', 'a', ' ', 'a', ' ']]
+        # self.board = [[' ', 'r', ' ', 'r', ' ', 'r'],
+        #               ['r', ' ', 'r', ' ', 'r', ' '],
+        #               [' ', ' ', ' ', ' ', ' ', ' '],
+        #               [' ', ' ', ' ', ' ', ' ', ' '],
+        #               [' ', 'a', ' ', 'a', ' ', 'a'],
+        #               ['a', ' ', 'a', ' ', 'a', ' ']]
+        self.length = 8
         self.stack = []
         self.current_player = "r"
         self.list_multi_jump = []
@@ -34,33 +34,33 @@ class Checkers:
 
 
 
-    # def print(self):
-    #     print()
-    #     print("       0     1     2     3     4     5     6     7")
-    #     print()
-    #     print("    +-----+-----+-----+-----+-----+-----+-----+-----+")
-    #     for row in range(8):
-    #         sys.stdout.write("{}   |".format(row))
-    #         for col in range(8):
-    #             sys.stdout.write("  {}  |".format(self.board[row][col]))
-    #         print()
-    #         print("    +-----+-----+-----+-----+-----+-----+-----+-----+")
-    #     print()
-    #     # print("       0     1     2     3     4     5 ")
-
     def print(self):
         print()
-        print("       0     1     2     3     4     5  ")
+        print("       0     1     2     3     4     5     6     7")
         print()
-        print("    +-----+-----+-----+-----+-----+-----+")
-        for row in range(self.length):
+        print("    +-----+-----+-----+-----+-----+-----+-----+-----+")
+        for row in range(8):
             sys.stdout.write("{}   |".format(row))
-            for col in range(self.length):
+            for col in range(8):
                 sys.stdout.write("  {}  |".format(self.board[row][col]))
             print()
-            print("    +-----+-----+-----+-----+-----+-----+")
+            print("    +-----+-----+-----+-----+-----+-----+-----+-----+")
         print()
-        # print("       0     1     2     3     4     5     6     7")
+        # print("       0     1     2     3     4     5 ")
+
+    # def print(self):
+    #     print()
+    #     print("       0     1     2     3     4     5  ")
+    #     print()
+    #     print("    +-----+-----+-----+-----+-----+-----+")
+    #     for row in range(self.length):
+    #         sys.stdout.write("{}   |".format(row))
+    #         for col in range(self.length):
+    #             sys.stdout.write("  {}  |".format(self.board[row][col]))
+    #         print()
+    #         print("    +-----+-----+-----+-----+-----+-----+")
+    #     print()
+    #     # print("       0     1     2     3     4     5     6     7")
 
 
 
