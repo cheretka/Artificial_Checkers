@@ -3,7 +3,9 @@ import random
 
 def alphabeta(checkers, isMax, AI_letter, depth, alpha, beta):
     someone_won = checkers.get_win()
-    if someone_won == AI_letter:
+    if someone_won == 'm':
+        return 0
+    elif someone_won == AI_letter:
         return 24
     elif someone_won != AI_letter and someone_won is not None:
         return -24
@@ -13,27 +15,31 @@ def alphabeta(checkers, isMax, AI_letter, depth, alpha, beta):
         r = 0
         for row in range(len(checkers.board)):
             for kolm in range(len(checkers.board[row])):
-                if checkers.board[row][kolm].lower() == 'a':
+                if checkers.board[row][kolm] == 'A':
+                    a = a + 2
+                elif checkers.board[row][kolm] == 'a':
                     a = a + 1
-                elif checkers.board[row][kolm].lower() == 'r':
+                elif checkers.board[row][kolm] == 'R':
+                    r = r + 2
+                elif checkers.board[row][kolm] == 'r':
                     r = r + 1
 
-        if a > r:
-            if AI_letter == 'a':
-                return a
+        if AI_letter == 'a':
+            if a > r:
+                return a - r
             else:
-                return -r
-        elif r > a:
-            if AI_letter == 'r':
-                return r
-            else:
-                return -a
+                return - r + a
         else:
-            return 0
+            if r > a:
+                return r - a
+            else:
+                return -a + r
+
 
     scores = []
     possible_moves = checkers.get_possible_moves()
     score = 0
+
     for move in possible_moves:
         checkers.make_move(move)
         if checkers.whose_turn() == AI_letter:
@@ -44,11 +50,11 @@ def alphabeta(checkers, isMax, AI_letter, depth, alpha, beta):
         checkers.undo_move()
         if isMax:
             alpha = max(alpha, score)
-            if beta<=alpha:
+            if beta <= alpha or alpha==24:
                 break
         else:
             beta = min(beta, score)
-            if beta <= alpha:
+            if beta <= alpha or beta==-24:
                 break
 
     return min(scores) if (isMax == False) else max(scores)
@@ -80,7 +86,7 @@ def get_move(board, diff):
             best_score = score
             final_move = []
             final_move.append(move)
-        # print(move)
+
 
     print("best_score: " + str(best_score) + "  final_move len: " + str(len(final_move)))
     # print(final_move)

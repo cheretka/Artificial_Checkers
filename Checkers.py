@@ -24,6 +24,8 @@ class Checkers:
         self.stack = []
         self.current_player = "r"
         self.list_multi_jump = []
+        self.steps_without_hitting_a = 0
+        self.steps_without_hitting_r = 0
 
 
 
@@ -66,6 +68,8 @@ class Checkers:
 
 
     def get_win(self):
+        if self.steps_without_hitting_a >= 15 and self.steps_without_hitting_r >= 15:
+            return 'm'
         if len(self.get_possible_moves()) == 0:
             return 'a' if self.current_player == 'r' else 'r'
         return None
@@ -75,7 +79,14 @@ class Checkers:
 
 
     def make_move(self, move):
-        self.stack.append([copy.deepcopy(self.board), self.whose_turn()])
+
+        self.stack.append([copy.deepcopy(self.board), self.whose_turn(), self.steps_without_hitting_a, self.steps_without_hitting_r])
+
+        if self.current_player == 'a':
+            self.steps_without_hitting_a += 1
+        else:
+            self.steps_without_hitting_r += 1
+
         start_x = move[0][0]
         start_y = move[0][1]
         end_x = move[1][0]
@@ -88,6 +99,12 @@ class Checkers:
         self.board[start_x][start_y] = ' '
 
         if abs(end_x - start_x) == 2:
+
+            if self.current_player == 'a':
+                self.steps_without_hitting_a = 0
+            else:
+                self.steps_without_hitting_r = 0
+
             self.board[(end_x + start_x) // 2][(end_y + start_y) // 2] = ' '
             if self.board[end_x][end_y].islower():
                 self.list_multi_jump = self.get_possible_multi_jump_moves(end_x, end_y)
@@ -101,7 +118,7 @@ class Checkers:
 
 
     def undo_move(self):
-        self.board, self.current_player = self.stack.pop()
+        self.board, self.current_player, self.steps_without_hitting_a, self.steps_without_hitting_r = self.stack.pop()
 
 
 

@@ -28,7 +28,9 @@ def move_player(checkers):
 
 def move_computer(checkers, diff):
     print('Turn  <' + checkers.current_player + '>  player')
-    checkers.make_move(get_move(checkers, diff))
+    move = get_move(checkers, diff)
+    print(move)
+    checkers.make_move(move)
 
 
 
@@ -72,7 +74,7 @@ def fun2(board):
         if checkers.whose_turn() == human_letter.lower():
             move_player(checkers)
         else:
-            move_computer(checkers, 5)
+            move_computer(checkers, 8)
         checkers.print()
 
     print("Win <" + checkers.get_win() + ">")
@@ -89,7 +91,7 @@ def fun3(board):
         if checkers.whose_turn() == human_letter.lower():
             move_player(checkers)
         else:
-            move_computer(checkers, 60)
+            move_computer(checkers, 15)
         checkers.print()
 
     print("Win <" + checkers.get_win() + ">")
@@ -98,9 +100,10 @@ def fun3(board):
 
 def fun4(board):
     while checkers.get_win() is None:
-        move_computer(checkers, 9)
+        move_computer(checkers, 13)
         checkers.print()
-        time.sleep(1)
+        time.sleep(0.2)
+
     print("Win <" + checkers.get_win() + ">")
 
 
