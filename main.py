@@ -27,9 +27,9 @@ def move_player(checkers):
 
 
 def move_computer(checkers, diff):
-    print('Turn  <' + checkers.current_player + '>  player')
+    # print('Turn  <' + checkers.current_player + '>  player')
     move = get_move(checkers, diff)
-    print(move)
+    # print(move)
     checkers.make_move(move)
 
 
@@ -100,32 +100,39 @@ def fun3(board):
 
 def fun4(board):
     while checkers.get_win() is None:
-        move_computer(checkers, 13)
-        checkers.print()
-        time.sleep(0.2)
+        move_computer(checkers, 10)
+        # checkers.print()
+        # time.sleep(0.1)
 
-    print("Win <" + checkers.get_win() + ">")
+    print( checkers.get_win())
 
 
 
 if __name__ == "__main__":
-    print('Welcome to English draughts (checkers)!')
-    checkers = Checkers()
-    checkers.print()
+    # print('Welcome to English draughts (checkers)!')
+    # checkers = Checkers()
+    # checkers.print()
+    #
+    # print('choose one option:')
+    # print('1 - play with bot (easy level)')
+    # print('2 - play with bot (medium level)')
+    # print('3 - play with bot (hard level)')
+    # print('4 - game between two bots (hard level)')
+    # choose = int(input())
+    #
+    # if choose == 1:
+    #     fun1(checkers)
+    # if choose == 2:
+    #     fun2(checkers)
+    # if choose == 3:
+    #     fun3(checkers)
+    # if choose == 4:
+    #     fun4(checkers)
 
-    print('choose one option:')
-    print('1 - play with bot (easy level)')
-    print('2 - play with bot (medium level)')
-    print('3 - play with bot (hard level)')
-    print('4 - game between two bots (hard level)')
-    choose = int(input())
 
-    if choose == 1:
-        fun1(checkers)
-    if choose == 2:
-        fun2(checkers)
-    if choose == 3:
-        fun3(checkers)
-    if choose == 4:
+    for i in range(1000):
+        checkers = Checkers()
+        # checkers.print()
         fun4(checkers)
+
 

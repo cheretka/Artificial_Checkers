@@ -22,7 +22,7 @@ class Checkers:
         #               ['a', ' ', 'a', ' ', 'a', ' ']]
         self.length = 8
         self.stack = []
-        self.current_player = "r"
+        self.current_player = "a"
         self.list_multi_jump = []
         self.steps_without_hitting_a = 0
         self.steps_without_hitting_r = 0

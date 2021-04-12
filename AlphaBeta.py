@@ -88,6 +88,6 @@ def get_move(board, diff):
             final_move.append(move)
 
 
-    print("best_score: " + str(best_score) + "  final_move len: " + str(len(final_move)))
+    # print("best_score: " + str(best_score) + "  final_move len: " + str(len(final_move)))
     # print(final_move)
     return random.choice(final_move)
