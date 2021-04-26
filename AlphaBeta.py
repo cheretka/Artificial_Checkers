@@ -6,9 +6,9 @@ def alphabeta(checkers, isMax, AI_letter, depth, alpha, beta):
     if someone_won == 'm':
         return 0
     elif someone_won == AI_letter:
-        return 24
+        return 100
     elif someone_won != AI_letter and someone_won is not None:
-        return -24
+        return -100
 
     if depth == 0:
         a = 0
@@ -50,11 +50,11 @@ def alphabeta(checkers, isMax, AI_letter, depth, alpha, beta):
         checkers.undo_move()
         if isMax:
             alpha = max(alpha, score)
-            if beta <= alpha or alpha==24:
+            if beta <= alpha or alpha==100:
                 break
         else:
             beta = min(beta, score)
-            if beta <= alpha or beta==-24:
+            if beta <= alpha or beta==-100:
                 break
 
     return min(scores) if (isMax == False) else max(scores)
@@ -67,7 +67,7 @@ def alphabeta(checkers, isMax, AI_letter, depth, alpha, beta):
 
 def get_move(board, diff):
     AI = board.whose_turn()
-    # print(board.whose_turn())
+    print(board.whose_turn())
     best_score = -1000
     final_move = []
 
@@ -88,6 +88,6 @@ def get_move(board, diff):
             final_move.append(move)
 
 
-    # print("best_score: " + str(best_score) + "  final_move len: " + str(len(final_move)))
-    # print(final_move)
+    print("best_score: " + str(best_score) + "  final_move len: " + str(len(final_move)))
+    print(final_move)
     return random.choice(final_move)

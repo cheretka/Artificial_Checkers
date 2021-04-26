@@ -2,7 +2,8 @@ from Checkers import *
 import random
 import time
 # from Minimax import *
-from AlphaBeta import *
+# from AlphaBeta import *
+from MCTS import *
 
 
 
@@ -29,7 +30,6 @@ def move_player(checkers):
 def move_computer(checkers, diff):
     # print('Turn  <' + checkers.current_player + '>  player')
     move = get_move(checkers, diff)
-    # print(move)
     checkers.make_move(move)
 
 
@@ -74,7 +74,7 @@ def fun2(board):
         if checkers.whose_turn() == human_letter.lower():
             move_player(checkers)
         else:
-            move_computer(checkers, 8)
+            move_computer(checkers, 4)
         checkers.print()
 
     print("Win <" + checkers.get_win() + ">")
@@ -91,27 +91,40 @@ def fun3(board):
         if checkers.whose_turn() == human_letter.lower():
             move_player(checkers)
         else:
-            move_computer(checkers, 15)
+            move_computer(checkers, 9)
         checkers.print()
 
     print("Win <" + checkers.get_win() + ">")
 
 
 
+# def fun4(board):
+#
+#     while checkers.get_win() is None:
+#         move = get_move(checkers, 14)
+#         checkers.make_move(move)
+#
+#         checkers.print()
+#         time.sleep(0.1)
+#
+#     print(checkers.get_win())
+
 def fun4(board):
+
     while checkers.get_win() is None:
-        move_computer(checkers, 10)
-        # checkers.print()
-        # time.sleep(0.1)
+        move = select_move(checkers, 10)
+        checkers.make_move(move)
 
-    print( checkers.get_win())
+        checkers.print()
+        time.sleep(0.1)
 
+    print(checkers.get_win())
 
 
 if __name__ == "__main__":
-    # print('Welcome to English draughts (checkers)!')
-    # checkers = Checkers()
-    # checkers.print()
+    print('Welcome to English draughts (checkers)!')
+    checkers = Checkers()
+    checkers.print()
     #
     # print('choose one option:')
     # print('1 - play with bot (easy level)')
@@ -129,10 +142,10 @@ if __name__ == "__main__":
     # if choose == 4:
     #     fun4(checkers)
 
-
-    for i in range(1000):
-        checkers = Checkers()
-        # checkers.print()
-        fun4(checkers)
+    fun4(checkers)
+    # for i in range(1000):
+    #     checkers = Checkers()
+    #     # checkers.print()
+    #     fun4(checkers)
 
 
