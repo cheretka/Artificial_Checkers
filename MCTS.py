@@ -1,5 +1,5 @@
 import random
-
+from math import inf
 
 
 class MCTSNode:
@@ -16,16 +16,23 @@ class MCTSNode:
         self.children = []
         self.unvisited_moves = checkers.get_possible_moves() #position that aren’t yet part of the tree
 
+    def __str__(self):
+
+        return "\nmove: " + str(self.move) + "\nnum_rollouts: " + str(self.num_rollouts) \
+               + "\nwin r: " + str(self.win_counts["r"]) + " win a: " + str(self.win_counts["a"]) + "\nchildren: " + str(self.children) + "\nunvisited_moves: " + str(self.unvisited_moves)
+
+
     def add_random_child(self):
         index = random.randint(0, len(self.unvisited_moves) - 1)
         new_move = self.unvisited_moves.pop(index)
-        new_game_state = self.checkers.make_move(new_move)
-        new_node = MCTSNode(new_game_state, self, new_move)
+        new_checkers = self.checkers.make_move(new_move)
+        new_node = MCTSNode(new_checkers, self, new_move)
         self.children.append(new_node)
         return new_node
 
     def record_win(self, winner):
-        self.win_counts[winner] += 1
+        if winner == 'r' or winner == 'a':
+            self.win_counts[winner] += 1
         self.num_rollouts += 1
 
     def can_add_child(self):
@@ -49,10 +56,19 @@ def select_move(checkers, num_rounds):
     root = MCTSNode(checkers)
 
     for i in range(num_rounds):
+        # print("-----------------------------")
+        # print(i)
         node = root
+
+        # print("root")
+        # print(root)
 
         while (not node.can_add_child()) and (not node.is_terminal()):
             node = select_child(node)
+
+        # print("node")
+        # print(node)
+
 
         if node.can_add_child():
             node = node.add_random_child()
@@ -64,7 +80,7 @@ def select_move(checkers, num_rounds):
             node = node.parent
 
     best_move = None
-    best_pct = 1.0
+    best_pct = -inf
 
     for child in root.children:
         child_pct = child.winning_pct(checkers.current_player)
@@ -75,6 +91,7 @@ def select_move(checkers, num_rounds):
     return best_move
 
 
+
 def select_child(self, node):
     total_rollouts = sum(child.num_rollouts for child in node.children)
 
@@ -83,14 +100,22 @@ def select_child(self, node):
 
     for child in node.children:
 
-        score = uct_score(
-            total_rollouts,
-            child.num_rollouts,
-            child.winning_pct(node.game_state.next_player),
-            self.temperature)
+        exploration = math.sqrt(math.log(total_rollouts) / child.num_rollouts)
+        score = child.winning_pct(node.game_state.current_player) + 0.5 * exploration
 
         if score > best_score:
-            best_score = uct_score
+            best_score = score
             best_child = child
 
     return best_child
+
+
+
+def simulate_random_game(checkers):
+
+    while checkers.get_win() is None:
+        move = random.choice(checkers.get_possible_moves())
+        checkers = checkers.make_move(move)
+
+    return checkers.get_win()
+
