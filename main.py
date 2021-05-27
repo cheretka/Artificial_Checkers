@@ -130,7 +130,7 @@ if __name__ == "__main__":
     #     print()
     #     print("possible moves: ")
     #     print(possible_moves)
-    #     movesss = get_move(checkers, 5)
+    #     movesss = get_move(checkers, 10)
     #
     #     print("turn: " + checkers.get_current_player())
     #     checkers = checkers.make_move(movesss)
@@ -140,12 +140,24 @@ if __name__ == "__main__":
 
 
     while checkers.get_win() is None:
-    # for i in range(5):
-        movesss = select_move(checkers, 1000)
-        print(movesss)
 
-        print("turn: " + checkers.get_current_player())
-        checkers = checkers.make_move(movesss)
-        checkers.print(movesss[0])
+        if checkers.get_current_player()=='r':
+            movesss = select_move(checkers, 3000)
+            # print(movesss)
+            # print("turn: " + checkers.get_current_player())
+            checkers = checkers.make_move(movesss)
+            checkers.print(movesss[0])
+        else:
+            possible_moves = checkers.get_possible_moves()
+            print("your possible moves: ")
+            for i in range(len(possible_moves)):
+                print(str(i) +" "+ str(possible_moves[i]))
+
+            user_input = int(input("please write index of your move: "))
+            checkers = checkers.make_move(possible_moves[user_input])
+            checkers.print(possible_moves[user_input][0])
+
+
+
 
     print("win: " + checkers.get_win())
