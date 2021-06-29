@@ -1,4 +1,3 @@
-from Checkers_state import *
 import numpy as np
 import math
 

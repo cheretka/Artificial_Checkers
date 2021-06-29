@@ -1,11 +1,10 @@
-from Checkers_state import *
-import random
+from Game.Checkers_state import *
 import time
 # from Minimax import *
 # from AlphaBeta import *
 # from MCTS import *
-from MCTS import *
-from Savery import *
+from Algorithms.MCTS import *
+from Network.Savery import *
 
 
 def move_player(checkers):
@@ -117,7 +116,7 @@ if __name__ == "__main__":
     for i in range(1000):
         print("\n\n------------------- ", i, " -----------------------\n\n")
 
-        print('Welcome to English draughts (checkers)!')
+        # print('Welcome to English draughts (checkers)!')
         checkers = Checkers_state()
         # checkers.print()
 
