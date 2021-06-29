@@ -5,8 +5,7 @@ import time
 # from AlphaBeta import *
 # from MCTS import *
 from MCTS import *
-
-
+from Savery import *
 
 
 def move_player(checkers):
@@ -26,14 +25,10 @@ def move_player(checkers):
             good_move = True
 
 
-
-
 def move_computer(checkers, diff):
     # print('Turn  <' + checkers.current_player + '>  player')
     move = get_move(checkers, diff)
     checkers.make_move(move)
-
-
 
 
 def move_computer_random(checkers):
@@ -56,7 +51,6 @@ def fun1(board):
 
     while checkers.get_win() is None:
         move_player(checkers)
-
 
     print("Win <" + checkers.get_win() + ">")
 
@@ -95,9 +89,7 @@ def fun3(board):
     print("Win <" + checkers.get_win() + ">")
 
 
-
 def fun4(board):
-
     while checkers.get_win() is None:
         move = get_move(checkers, 14)
         checkers.make_move(move)
@@ -106,6 +98,7 @@ def fun4(board):
         time.sleep(0.1)
 
     print(checkers.get_win())
+
 
 # def fun4(board):
 #
@@ -120,44 +113,30 @@ def fun4(board):
 
 
 if __name__ == "__main__":
-    print('Welcome to English draughts (checkers)!')
-    checkers = Checkers_state()
-    checkers.print()
 
-    # while checkers.get_win() is None:
-    #
-    #     possible_moves = checkers.get_possible_moves()
-    #     print()
-    #     print("possible moves: ")
-    #     print(possible_moves)
-    #     movesss = get_move(checkers, 10)
-    #
-    #     print("turn: " + checkers.get_current_player())
-    #     checkers = checkers.make_move(movesss)
-    #     checkers.print(movesss[0])
-    #
-    # print("win: " + checkers.get_win())
+    for i in range(1000):
+        print("\n\n------------------- ", i, " -----------------------\n\n")
 
+        print('Welcome to English draughts (checkers)!')
+        checkers = Checkers_state()
+        checkers.print()
 
-    while checkers.get_win() is None:
+        while checkers.get_win() is None:
 
-        if checkers.get_current_player()=='r':
-            movesss = select_move(checkers, 3000)
-            # print(movesss)
-            # print("turn: " + checkers.get_current_player())
-            checkers = checkers.make_move(movesss)
-            checkers.print(movesss[0])
-        else:
-            possible_moves = checkers.get_possible_moves()
-            print("your possible moves: ")
-            for i in range(len(possible_moves)):
-                print(str(i) +" "+ str(possible_moves[i]))
+            if checkers.get_current_player() == 'r':
 
-            user_input = int(input("please write index of your move: "))
-            checkers = checkers.make_move(possible_moves[user_input])
-            checkers.print(possible_moves[user_input][0])
+                print(save_board(checkers))
 
+                movesss = select_move(checkers, 1500)
 
+                print(save_piece(movesss))
+                print(save_move(movesss))
 
+                checkers = checkers.make_move(movesss)
+                # checkers.print(movesss[0])
+            else:
+                movesss = select_move(checkers, 100)
+                checkers = checkers.make_move(movesss)
+                # checkers.print(movesss[0])
 
-    print("win: " + checkers.get_win())
+        print("win: " + checkers.get_win())
