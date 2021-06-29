@@ -113,27 +113,26 @@ def fun4(board):
 
 if __name__ == "__main__":
 
-    for i in range(1000):
-        print("\n\n------------------- ", i, " -----------------------\n\n")
+    number_of_games = 1000
+    red_experience = 600
+    white_experience = 100
+    sample = 3
 
-        # print('Welcome to English draughts (checkers)!')
+    for i in range(number_of_games):
+        print("\n\n------------------- ", i, " -----------------------\n\n")
         checkers = Checkers_state()
-        # checkers.print()
 
         while checkers.get_win() is None:
 
             if checkers.get_current_player() == 'r':
+                selected_move = select_move(checkers, red_experience)
+                print(save_board(checkers, sample, number_of_games), " ", save_piece(selected_move, sample, number_of_games), " ", save_move(selected_move, sample, number_of_games))
+                checkers = checkers.make_move(selected_move)
 
-                movesss = select_move(checkers, 2000)
-
-                print(save_board(checkers), " ", save_piece(movesss), " ", save_move(movesss))
-
-                checkers = checkers.make_move(movesss)
-                # checkers.print(movesss[0])
             else:
-                movesss = select_move(checkers, 1000)
-                checkers = checkers.make_move(movesss)
-                # checkers.print(movesss[0])
+                selected_move = select_move(checkers, white_experience)
+                checkers = checkers.make_move(selected_move)
+                # checkers.print(selected_move[0])
 
             print()
 

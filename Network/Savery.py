@@ -1,13 +1,8 @@
 import numpy as np
 import math
 
-FILE_MOVE = "move.2.1000.txt"
-FILE_PIECE = "piece.2.1000.txt"
-FILE_BOARD = "board.2.1000.txt"
 
-
-
-def save_board(checkers):
+def save_board(checkers, sample, number_of_games):
     board_list = []
 
     for i in range(len(checkers.board)):
@@ -30,51 +25,51 @@ def save_board(checkers):
 
     num_list = np.array(board_list)
 
-    file = open(FILE_BOARD, "a+")
+    file = open("board." + str(sample) + "." + str(number_of_games) + ".txt", "a+")
     np.savetxt(file, num_list)
     file.close()
 
     return board_list
 
 
-def load_board():
-    input_data = np.loadtxt(FILE_BOARD).reshape(-1, 32)
+def load_board(sample, number_of_games):
+    input_data = np.loadtxt("board." + str(sample) + "." + str(number_of_games) + ".txt").reshape(-1, 32)
     # print(input_data)
 
     return input_data
 
 
-def save_piece(move):
+def save_piece(move, sample, number_of_games):
     num = math.floor(move[0][0] * 4 + move[0][1] / 2)
     piece_list = [num]
     num_list = np.array(piece_list)
 
-    file = open(FILE_PIECE, "a+")
+    file = open("piece." + str(sample) + "." + str(number_of_games) + ".txt", "a+")
     np.savetxt(file, num_list)
     file.close()
 
     return piece_list
 
 
-def load_piece():
-    input_data = np.loadtxt(FILE_PIECE)
+def load_piece(sample, number_of_games):
+    input_data = np.loadtxt("piece." + str(sample) + "." + str(number_of_games) + ".txt")
 
     return input_data
 
 
-def save_move(move):
+def save_move(move, sample, number_of_games):
     num = math.floor(move[1][0] * 4 + move[1][1] / 2)
     piece_list = [num]
     num_list = np.array(piece_list)
 
-    file = open(FILE_MOVE, "a+")
+    file = open("move." + str(sample) + "." + str(number_of_games) + ".txt", "a+")
     np.savetxt(file, num_list)
     file.close()
 
     return piece_list
 
 
-def load_move():
-    input_data = np.loadtxt(FILE_MOVE)
+def load_move(sample, number_of_games):
+    input_data = np.loadtxt("move." + str(sample) + "." + str(number_of_games) + ".txt")
 
     return input_data
