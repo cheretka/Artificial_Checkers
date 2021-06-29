@@ -45,12 +45,22 @@ print("shape ", train_output_move.shape)
 print()
 
 # Зарезервируем 10,000 примеров для валидации
-# border = -10000
-# validation_input = train_input[border:]
-# validation_output = train_output[border:]
-# train_input = train_input[:border]
-# train_output = train_output[:border]
+border = -11
+validation_input = train_input[border:]
+train_input = train_input[:border]
 
+validation_output_piece = train_output_piece[border:]
+train_output_piece = train_output_piece[:border]
+
+validation_output_move = train_output_move[border:]
+train_output_move = train_output_move[:border]
+
+print("validation_input ", validation_input.shape)
+print("train_input ", train_input.shape)
+print("validation_output_piece ", validation_output_piece.shape)
+print("train_output_piece ", train_output_piece.shape)
+print("validation_output_move ", validation_output_move.shape)
+print("train_output_move ", train_output_move.shape)
 
 # ----------------------------------------------------------------------------------------------------------------------
 
@@ -62,18 +72,23 @@ model.compile(optimizer=keras.optimizers.RMSprop(),
 print('\n## Train the model on train_data')
 history = model.fit(train_input,
                     y=[train_output_piece, train_output_move],
-                    batch_size=32,
-                    epochs=10)
+                    batch_size=8,
+                    epochs=1000,
+                    validation_data=(validation_input, [validation_output_piece, validation_output_move]))
+
+# Возвращаемый объект "history" содержит записи
+# значений потерь и метрик во время обучения
+print('\nhistory dict:', history.history)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # # Возвращаемый объект "history" содержит записи
 # # значений потерь и метрик во время обучения
-print('\nhistory dict:', history.history)
+# print('\nhistory dict:', history.history)
 #
 # # Оценим модель на тестовых данных, используя "evaluate"
-# print('## Evaluate network:')
-# results = model.evaluate(test_input, test_output, batch_size=128)
-# print('test loss, test acc:', results)
+print('## Evaluate network:')
+results = model.evaluate(validation_input, [validation_output_piece, validation_output_move], batch_size=32)
+print('test loss, test acc:', results)
 #
 #
 #

@@ -119,24 +119,23 @@ if __name__ == "__main__":
 
         print('Welcome to English draughts (checkers)!')
         checkers = Checkers_state()
-        checkers.print()
+        # checkers.print()
 
         while checkers.get_win() is None:
 
             if checkers.get_current_player() == 'r':
 
-                print(save_board(checkers))
+                movesss = select_move(checkers, 2000)
 
-                movesss = select_move(checkers, 1500)
-
-                print(save_piece(movesss))
-                print(save_move(movesss))
+                print(save_board(checkers), " ", save_piece(movesss), " ", save_move(movesss))
 
                 checkers = checkers.make_move(movesss)
                 # checkers.print(movesss[0])
             else:
-                movesss = select_move(checkers, 100)
+                movesss = select_move(checkers, 1000)
                 checkers = checkers.make_move(movesss)
                 # checkers.print(movesss[0])
+
+            print()
 
         print("win: " + checkers.get_win())

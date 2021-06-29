@@ -2,6 +2,11 @@ from Checkers_state import *
 import numpy as np
 import math
 
+FILE_MOVE = "move.2.1000.txt"
+FILE_PIECE = "piece.2.1000.txt"
+FILE_BOARD = "board.2.1000.txt"
+
+
 
 def save_board(checkers):
     board_list = []
@@ -26,7 +31,7 @@ def save_board(checkers):
 
     num_list = np.array(board_list)
 
-    file = open("test.txt", "a+")
+    file = open(FILE_BOARD, "a+")
     np.savetxt(file, num_list)
     file.close()
 
@@ -34,7 +39,7 @@ def save_board(checkers):
 
 
 def load_board():
-    input_data = np.loadtxt("test.txt").reshape(-1, 32)
+    input_data = np.loadtxt(FILE_BOARD).reshape(-1, 32)
     # print(input_data)
 
     return input_data
@@ -45,7 +50,7 @@ def save_piece(move):
     piece_list = [num]
     num_list = np.array(piece_list)
 
-    file = open("piece.txt", "a+")
+    file = open(FILE_PIECE, "a+")
     np.savetxt(file, num_list)
     file.close()
 
@@ -53,16 +58,17 @@ def save_piece(move):
 
 
 def load_piece():
-    input_data = np.loadtxt("piece.txt")
+    input_data = np.loadtxt(FILE_PIECE)
 
     return input_data
+
 
 def save_move(move):
     num = math.floor(move[1][0] * 4 + move[1][1] / 2)
     piece_list = [num]
     num_list = np.array(piece_list)
 
-    file = open("move.txt", "a+")
+    file = open(FILE_MOVE, "a+")
     np.savetxt(file, num_list)
     file.close()
 
@@ -70,6 +76,6 @@ def save_move(move):
 
 
 def load_move():
-    input_data = np.loadtxt("move.txt")
+    input_data = np.loadtxt(FILE_MOVE)
 
     return input_data

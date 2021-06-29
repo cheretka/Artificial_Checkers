@@ -74,7 +74,7 @@ def select_move(checkers, num_rounds):
 
     for child in root.children:
         child_pct = child.winning_pct(checkers.current_player)
-        print("move: " + str(child.move) + "  ptc: " + str(round(child_pct, 3)))
+        # print("move: " + str(child.move) + "  ptc: " + str(round(child_pct, 3)))
         if child_pct > best_pct:
             best_pct = child_pct
             best_move = child.move
