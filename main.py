@@ -1,10 +1,10 @@
-from Game.Checkers_state import *
+from Checkers_state import *
 import time
 # from Minimax import *
 # from AlphaBeta import *
 # from MCTS import *
 from Algorithms.MCTS import *
-from Network.Savery import *
+from MyNetwork import *
 
 
 def move_player(checkers):
@@ -99,6 +99,15 @@ def fun4(board):
     print(checkers.get_win())
 
 
+def check(network_move, all_moves):
+    for move in all_moves:
+        if move[0] == network_move[0] and move[1] == network_move[1]:
+            return move
+
+    return None
+
+
+
 # def fun4(board):
 #
 #     while checkers.get_win() is None:
@@ -112,28 +121,37 @@ def fun4(board):
 
 
 if __name__ == "__main__":
+    print('Welcome to English draughts (checkers)!')
 
-    number_of_games = 1000
-    red_experience = 600
-    white_experience = 100
-    sample = 3
+    checkers = Checkers_state()
+    checkers.print()
 
-    for i in range(number_of_games):
-        print("\n\n------------------- ", i, " -----------------------\n\n")
-        checkers = Checkers_state()
 
-        while checkers.get_win() is None:
+    while checkers.get_win() is None:
 
-            if checkers.get_current_player() == 'r':
-                selected_move = select_move(checkers, red_experience)
-                print(save_board(checkers, sample, number_of_games), " ", save_piece(selected_move, sample, number_of_games), " ", save_move(selected_move, sample, number_of_games))
-                checkers = checkers.make_move(selected_move)
+        selected_move = 0
 
-            else:
-                selected_move = select_move(checkers, white_experience)
-                checkers = checkers.make_move(selected_move)
-                # checkers.print(selected_move[0])
+        if checkers.get_current_player() == 'r':
 
-            print()
+            selected_move = get_move_from_network(checkers)
+            print("selected_move ", selected_move)
+            for move in checkers.get_possible_moves():
+                print(move)
 
+            selected_move = check_move(selected_move, checkers.get_possible_moves())
+            if selected_move == None:
+                print("\n!! the selected move is not possible !!\n")
+                break
+        else:
+            # selecte move by MCTS
+            selected_move = select_move(checkers, white_experience)
+
+
+        checkers = checkers.make_move(selected_move)
+        checkers.print(selected_move[0])
+
+
+        print()
+
+    if checkers.get_win() is not None:
         print("win: " + checkers.get_win())

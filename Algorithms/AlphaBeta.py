@@ -61,7 +61,7 @@ def alphabeta(checkers, AI_letter, depth, alpha, beta, maximizingPlayer):
 
 
 
-def get_move(board, depth):
+def select_move(board, depth):
     AI_letter = board.get_current_player()
 
     best_score = -inf
@@ -69,7 +69,9 @@ def get_move(board, depth):
 
     possible_moves = board.get_possible_moves()
     if len(possible_moves) == 1:
-        return possible_moves[0]
+        return_move = possible_moves[0]
+        print("return_move ", return_move)
+        return return_move
 
 
     for move in possible_moves:
@@ -84,5 +86,6 @@ def get_move(board, depth):
             best_moves.append(move)
 
 
-    print("best_score: " + str(best_score) + "  final_move: " + str(len(best_moves)))
-    return random.choice(best_moves)
+    return_move = random.choice(best_moves)
+    print("best_score: ", str(best_score), "  len of best moves: ", str(len(best_moves)), "return_move ", return_move)
+    return return_move

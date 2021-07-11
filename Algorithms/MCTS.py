@@ -79,7 +79,7 @@ def select_move(checkers, num_rounds):
             best_pct = child_pct
             best_move = child.move
 
-    print("selected move: " + str(best_move))
+    print("selected move (by MCTS): " + str(best_move))
     return best_move
 
 

@@ -50,7 +50,7 @@ def minimax(checkers, max_min, AI_letter, depth):
 
 
 
-def get_move(board, diff):
+def select_move(board, diff):
     AI = board.whose_turn()
     print(board.whose_turn())
     best_score = -1000
