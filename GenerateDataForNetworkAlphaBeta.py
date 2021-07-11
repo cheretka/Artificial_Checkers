@@ -5,9 +5,9 @@ from MyNetwork import *
 if __name__ == "__main__":
 
     number_of_games = 1000
-    red_experience = 5
-    white_experience = 1
-    sample = 1
+    red_experience = 6
+    white_experience = 2
+    sample = 15
 
     for i in range(number_of_games):
         print("\n\n------------------- ", (i + 1), " -----------------------\n\n")

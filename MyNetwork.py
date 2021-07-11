@@ -5,7 +5,6 @@ from Savery import *
 import math
 
 
-
 def create_network():
     print("\n## Create network model:")
     input_layer = keras.Input(shape=(32,), name='checkers_board')
@@ -37,17 +36,8 @@ def create_network():
 # ----------------------------------------------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
 def fit_network():
-
     model = keras.models.load_model("my_model")
-
 
     print("\n## Load and reshape input/output data:")
     sample = 0
@@ -106,20 +96,12 @@ def fit_network():
 
     model.save("my_model")
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 
-
-
-
-
 def get_move_from_network(checkers):
-
-
-
     model = keras.models.load_model("my_model")
-
-
 
     board_list = []
 
@@ -150,33 +132,33 @@ def get_move_from_network(checkers):
     # print(train_input)
     # print()
 
-
     predictions = model.predict(train_input)
 
-    # print("train_input ", type(predictions))
+    print("train_input ", type(predictions))
     # print("shape ", predictions.shape)
-    # print(predictions)
+    print(predictions)
+    # print(sum(predictions[0]) )
     # print()
     piece = np.argmax(predictions[0])
+    print("sum 0 ", sum(predictions[0][0]))
     move = np.argmax(predictions[1])
-    # print(piece, " ", move)
+    print("sum 1 ", sum(predictions[1][0]))
+    print(piece, " ", move)
 
-    x1 = math.floor(piece/4)
-    x2 = ((piece%4)*2 + 1) if x1%2==0 else ((piece%4)*2)
-    y1 = math.floor(move/4)
-    y2 = ((move%4)*2 + 1) if y1%2==0 else ((move%4)*2)
+    for i in range(32):
+        print(i, " ", predictions[1][0][i]*100)
+
+    x1 = math.floor(piece / 4)
+    x2 = ((piece % 4) * 2 + 1) if x1 % 2 == 0 else ((piece % 4) * 2)
+    y1 = math.floor(move / 4)
+    y2 = ((move % 4) * 2 + 1) if y1 % 2 == 0 else ((move % 4) * 2)
 
     model.save("my_model")
 
     return [[x1, x2], [y1, y2]]
 
 
-
-
-
-
 def test_network():
-
     model = keras.models.load_model("my_model")
 
     print("\n## Load and reshape input/output data:")
@@ -198,7 +180,6 @@ def test_network():
     print("train_output_move ", train_output_move)
     print("shape ", train_output_move.shape)
     print()
-
 
     # # Оценим модель на тестовых данных, используя "evaluate"
     print('## Evaluate network:')
@@ -225,12 +206,7 @@ def test_network():
     model.save("my_model")
 
 
-
-
-
-
 if __name__ == "__main__":
-
     # create_network()
     fit_network()
 
