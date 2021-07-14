@@ -10,7 +10,7 @@ if __name__ == "__main__":
     number_of_games = 1000
     red_experience = 7
     white_experience = 2
-    sample = 1
+    sample = 15
 
     exp = 0
     for i in range(500):
@@ -23,7 +23,7 @@ if __name__ == "__main__":
             selected_move = 0
 
             if checkers.get_current_player() == 'r':
-                red_experience = math.ceil(exp/12) + 3
+                red_experience = math.ceil(exp/13) + 3
                 print("exp, ", exp, " - ", red_experience)
                 selected_move = select_move(checkers, red_experience)
                 print(save_board(checkers, sample, number_of_games), " ",
