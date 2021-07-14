@@ -24,6 +24,8 @@ if __name__ == "__main__":
 
             if checkers.get_current_player() == 'r':
                 red_experience = math.ceil(exp/13) + 3
+                if red_experience > 6:
+                    red_experience = 6
                 print("exp, ", exp, " - ", red_experience)
                 selected_move = select_move(checkers, red_experience)
                 print(save_board(checkers, sample, number_of_games), " ",
@@ -36,7 +38,7 @@ if __name__ == "__main__":
 
             checkers = checkers.make_move(selected_move)
 
-            # print()
+
 
 
         print("win: " + checkers.get_win())

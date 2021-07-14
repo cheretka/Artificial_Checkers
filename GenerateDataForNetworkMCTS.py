@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
             checkers = checkers.make_move(selected_move)
 
-            # print()
+
 
 
         print("win: " + checkers.get_win())
