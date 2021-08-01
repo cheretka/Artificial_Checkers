@@ -21,9 +21,10 @@ if __name__ == "__main__":
 
             if checkers.get_current_player() == 'r':
                 red_experience = 400 + exp * 25
-                print("exp, ", exp, " - ", red_experience)
+
+                # print("exp, ", exp, " - ", red_experience)
                 selected_move = select_move(checkers, red_experience)
-                print(save_board(checkers, sample, number_of_games), " ",
+                print(exp, ") ", red_experience, " / ", save_board(checkers, sample, number_of_games), " ",
                       save_piece(selected_move, sample, number_of_games), " ",
                       save_move(selected_move, sample, number_of_games))
 
@@ -33,8 +34,5 @@ if __name__ == "__main__":
                 selected_move = select_move(checkers, white_experience)
 
             checkers = checkers.make_move(selected_move)
-
-
-
 
         print("win: " + checkers.get_win())
