@@ -15,6 +15,8 @@ class Checkers_state:
                       [' ', 'a', ' ', 'a', ' ', 'a', ' ', 'a'],
                       ['a', ' ', 'a', ' ', 'a', ' ', 'a', ' ']]
 
+        #
+
         self.current_player = "r"
         self.steps_without_hitting = {"r": 0, "a": 0}
 

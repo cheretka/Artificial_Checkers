@@ -1,7 +1,7 @@
 from tensorflow import keras
 from tensorflow.keras import layers
 from Savery import *
-
+from tensorflow.keras.utils import plot_model
 import math
 
 
@@ -208,6 +208,9 @@ def test_network():
 
 if __name__ == "__main__":
     # create_network()
-    fit_network()
+    # fit_network()
+    #
+    # test_network()
+    model = keras.models.load_model("my_model")
 
-    test_network()
+    plot_model(model, to_file='../images/multi_output_model.png')

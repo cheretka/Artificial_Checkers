@@ -52,8 +52,8 @@ def fit_network():
     model = keras.models.load_model("model_move")
 
     print("\n## Load and reshape input/output data:")
-    sample = 1
-    number_of_games = 1
+    sample = 16
+    number_of_games = 16
 
     train_input_board = load_board(sample, number_of_games)
     train_input_board = train_input_board.astype('float32') / 5
@@ -100,8 +100,8 @@ def fit_network():
     #                     validation_data=(validation_input, [validation_output_piece, validation_output_move]))
     history = model.fit(x=[train_input_piece, train_input_board],
                         y=train_output_move,
-                        batch_size=32,
-                        epochs=10)
+                        batch_size=16,
+                        epochs=40)
 
     # Возвращаемый объект "history" содержит записи
     # значений потерь и метрик во время обучения
@@ -222,6 +222,9 @@ def test_network():
 
 if __name__ == "__main__":
     # create_network()
-    fit_network()
+    # fit_network()
 
     # test_network()
+
+    model = keras.models.load_model("model_move")
+    model.summary()

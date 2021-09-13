@@ -70,7 +70,7 @@ def select_move(board, depth):
     possible_moves = board.get_possible_moves()
     if len(possible_moves) == 1:
         return_move = possible_moves[0]
-        print(AI_letter, ":  return_move ", return_move)
+        # print(AI_letter, ":  return_move ", return_move)
         return return_move
 
 
@@ -87,5 +87,5 @@ def select_move(board, depth):
 
 
     return_move = random.choice(best_moves)
-    print(AI_letter, ":  best_score: ", str(best_score), "  len: ", str(len(best_moves)), "return_move ", return_move)
+    # print(AI_letter, ":  best_score: ", str(best_score), "  len: ", str(len(best_moves)), "return_move ", return_move)
     return return_move

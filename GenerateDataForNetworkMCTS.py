@@ -10,29 +10,29 @@ if __name__ == "__main__":
     sample = 0
 
     exp = 0
-    for i in range(500):
-        exp = 0
-        print("\n\n------------------- ", (i + 1), " -----------------------\n\n")
-        checkers = Checkers_state()
 
-        while checkers.get_win() is None:
+    exp = 0
 
-            selected_move = 0
+    checkers = Checkers_state()
 
-            if checkers.get_current_player() == 'r':
-                red_experience = 400 + exp * 25
+    while checkers.get_win() is None:
 
-                # print("exp, ", exp, " - ", red_experience)
-                selected_move = select_move(checkers, red_experience)
-                print(exp, ") ", red_experience, " / ", save_board(checkers, sample, number_of_games), " ",
-                      save_piece(selected_move, sample, number_of_games), " ",
-                      save_move(selected_move, sample, number_of_games))
+        selected_move = 0
 
-                exp += 1
+        if checkers.get_current_player() == 'r':
+            red_experience = 400 + exp * 25
 
-            else:
-                selected_move = select_move(checkers, white_experience)
+            # print("exp, ", exp, " - ", red_experience)
+            selected_move = select_move(checkers, red_experience)
+            print(exp, ") ", red_experience, " / ", save_board(checkers, sample, number_of_games), " ",
+                  save_piece(selected_move, sample, number_of_games), " ",
+                  save_move(selected_move, sample, number_of_games))
 
-            checkers = checkers.make_move(selected_move)
+            exp += 1
 
-        print("win: " + checkers.get_win())
+        else:
+            selected_move = select_move(checkers, white_experience)
+
+        checkers = checkers.make_move(selected_move)
+
+    print("win: " + checkers.get_win())

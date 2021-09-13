@@ -1,49 +1,42 @@
 import random
-
+from math import inf
 
 def minimax(checkers, max_min, AI_letter, depth):
     someone_won = checkers.get_win()
-    if someone_won == AI_letter:
-        return 13
+    if someone_won == 'remis':
+        return 0
+    elif someone_won == AI_letter:
+        return 100
     elif someone_won != AI_letter and someone_won is not None:
-        return -13
+        return -100
 
     if depth == 0:
         a = 0
         r = 0
         for row in range(len(checkers.board)):
             for kolm in range(len(checkers.board[row])):
-                if checkers.board[row][kolm].lower() == 'a':
-                    a = a+1
-                elif checkers.board[row][kolm].lower() == 'r':
-                    r = r+1
+                if checkers.board[row][kolm] == 'A':
+                    a = a + 3
+                elif checkers.board[row][kolm] == 'a':
+                    a = a + 1
+                elif checkers.board[row][kolm] == 'R':
+                    r = r + 3
+                elif checkers.board[row][kolm] == 'r':
+                    r = r + 1
 
-        if a>r:
-            if  AI_letter=='a':
-                return a
-            else:
-                return -r
-        elif r>a:
-            if AI_letter == 'r':
-                return r
-            else:
-                return -a
-        else:
-            return 0
+        return (a - r) if AI_letter == 'a' else (r - a)
 
 
     scores = []
     possible_moves = checkers.get_possible_moves()
     score = 0
     for move in possible_moves:
-        checkers.make_move(move)
-        if checkers.whose_turn() == AI_letter:
-            score = minimax(checkers, 1, AI_letter, depth-1)
+        new_checkers = checkers.make_move(move)
+        if checkers.get_current_player() == AI_letter:
+            score = minimax(new_checkers, 1, AI_letter, depth-1)
         else:
-            score = minimax(checkers, -1, AI_letter, depth-1)
+            score = minimax(new_checkers, -1, AI_letter, depth-1)
         scores.append(score)
-        checkers.undo_move()
-
 
     return min(scores) if max_min == -1 else max(scores)
 
@@ -51,48 +44,37 @@ def minimax(checkers, max_min, AI_letter, depth):
 
 
 def select_move(board, diff):
-    AI = board.whose_turn()
-    print(board.whose_turn())
-    best_score = -1000
-    final_move = []
+    AI_letter = board.get_current_player()
+
+    best_score = -inf
+    best_moves = []
 
     possible_moves = board.get_possible_moves()
+    if len(possible_moves) == 1:
+        return_move = possible_moves[0]
+        # print(AI_letter, ":  return_move ", return_move)
+        return return_move
+
+
     for move in possible_moves:
-        board.make_move(move)
-        if board.whose_turn() == AI:
-            score = minimax(board, 1, AI, diff)
+        new_checkers = board.make_move(move)
+
+        if board.get_current_player() == AI_letter:
+            score = minimax(new_checkers, 1, AI_letter, diff)
         else:
-            score = minimax(board, -1, AI, diff)
-        board.undo_move()
+            score = minimax(new_checkers, -1, AI_letter, diff)
 
         if score == best_score:
-            final_move.append(move)
+            best_moves.append(move)
         elif score > best_score:
             best_score = score
-            final_move = []
-            final_move.append(move)
-        print(move)
+            best_moves = []
+            best_moves.append(move)
+        # print(move)
 
-    print("best_score: " + str(best_score) + "  final_move len: " + str(len(final_move)))
-    print(final_move)
-    return random.choice(final_move)
-
-
+    # print("best_score: " + str(best_score) + "  final_move len: " + str(len(best_moves)))
+    # print(best_moves)
+    return random.choice(best_moves)
 
 
-# def counting(checkers):
-#     a = 0
-#     r = 0
-#     for row in range(len(checkers.board)):
-#         for kolm in range(len(checkers.board[row])):
-#             if checkers.board[row][kolm].lower() == 'a':
-#                 a = a+1
-#             elif checkers.board[row][kolm].lower() == 'r':
-#                 r = r+1
-#
-#     if a > r:
-#         return 'a'
-#     elif r > a:
-#         return 'r'
-#     else:
-#         return 0
+
