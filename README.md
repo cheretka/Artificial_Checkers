@@ -1,4 +1,5 @@
-# English-draughts
+#  Deep Learning and English draughts
+
 Implementation of checkers (draughts) strategy board game with AI
 
 ## Usage
