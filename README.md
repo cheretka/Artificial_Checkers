@@ -1,4 +1,6 @@
-#  Deep Learning and English draughts
+#  Applying Deep Reinforcement Learning Algorithms to The Game of Draughts
+
+Student Thesis
 
 Implementation of checkers (draughts) strategy board game with AI
 
