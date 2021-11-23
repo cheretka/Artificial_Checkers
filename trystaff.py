@@ -1,45 +1,36 @@
 import numpy as np
 import math
+import time
+from Algorithms.Minimax import *
+from Checkers_state import *
+
+
+
 
 
 if __name__ == "__main__":
+    start = time.time()
 
-    input_data = np.loadtxt("board.0.1000.txt").reshape(-1, 32)
-    print("board ", input_data.shape)
-    print(input_data)
+    checkers = Checkers_state()
+    checkers.print()
 
-
-
-
-
-    # input_data = np.loadtxt("piece.0.1000.txt")
-    # print("piece ", input_data.shape)
-    # print(input_data)
-    # input_data = np.loadtxt("move.0.1000.txt")
-    # print("move ", input_data.shape)
-    # print(input_data)
+    # print("start")
     #
-    # print()
     #
-    # input_data = np.loadtxt("board.1.1000.txt").reshape(-1, 32)
-    # print("board ", input_data.shape)
-    # print(input_data)
-    # input_data = np.loadtxt("piece.1.1000.txt")
-    # print("piece ", input_data.shape)
-    # print(input_data)
-    # input_data = np.loadtxt("move.1.1000.txt")
-    # print("move ", input_data.shape)
-    # print(input_data)
+    # for i in range(9, 15):
+    #     print("i=", i)
+    #     checkers = Checkers_state()
+    #     # checkers.print()
+    #     start = time.time()
     #
-    # print()
+    #     selected_move = select_move(checkers, i)
     #
-    # input_data = np.loadtxt("board.15.1000.txt").reshape(-1, 32)
-    # print("board ", input_data.shape)
-    # print(input_data)
-    # input_data = np.loadtxt("piece.15.1000.txt")
-    # print("piece ", input_data.shape)
-    # print(input_data)
-    # input_data = np.loadtxt("move.15.1000.txt")
-    # print("move ", input_data.shape)
-    # print(input_data)
+    #     end = time.time()
+    #     print(i, " ", end - start, "\n")
+    #
+    #
+    #
+    # end = time.time()
+    # print("the end time: ")
+    # print(end - start)
 
