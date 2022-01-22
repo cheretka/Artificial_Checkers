@@ -47,7 +47,6 @@ def moves_to_tables(input_piece):
     return table_zeros
 
 
-
 def fit_network():
     model = keras.models.load_model("model_move_3")
 
@@ -61,14 +60,12 @@ def fit_network():
     print("shape ", train_input_board.shape)
     print()
 
-
     train_input_piece = load_piece(sample, number_of_games)
     train_input_piece = moves_to_tables(train_input_piece)
     train_input_piece = train_input_piece.astype('float32')
     print("train_input_piece ", train_input_piece)
     print("shape ", train_input_piece.shape)
     print()
-
 
     train_output_move = load_move(sample, number_of_games)
     train_output_move = train_output_move.astype('float32')

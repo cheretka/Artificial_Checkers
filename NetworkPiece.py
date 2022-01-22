@@ -6,7 +6,6 @@ import math
 
 
 def create_network():
-
     print("\n## Create network model:")
     input_layer = keras.Input(shape=(32,), name='checkers_board')
 
@@ -40,7 +39,6 @@ def create_network():
 def fit_network():
     model = keras.models.load_model("model_piece_3")
 
-
     print("\n## Load and reshape input/output data:")
     sample = 16
     number_of_games = 16
@@ -51,14 +49,11 @@ def fit_network():
     print("shape ", train_input.shape)
     print()
 
-
     train_output_piece = load_piece(sample, number_of_games)
     train_output_piece = train_output_piece.astype('float32')
     print("train_output_piece ", train_output_piece)
     print("shape ", train_output_piece.shape)
     print()
-
-
 
     print('\n## Train the model on train_data')
     # history = model.fit(train_input,
@@ -70,8 +65,6 @@ def fit_network():
                         y=train_output_piece,
                         batch_size=32,
                         epochs=40)
-
-
 
     print('\nhistory dict:', history.history)
 
@@ -128,7 +121,7 @@ def get_move_from_network(checkers):
     print(piece, " ", move)
 
     for i in range(32):
-        print(i, " ", predictions[1][0][i]*100)
+        print(i, " ", predictions[1][0][i] * 100)
 
     x1 = math.floor(piece / 4)
     x2 = ((piece % 4) * 2 + 1) if x1 % 2 == 0 else ((piece % 4) * 2)
@@ -158,7 +151,6 @@ def test_network():
     print("shape ", train_output_piece.shape)
     print()
 
-
     # # Оценим модель на тестовых данных, используя "evaluate"
     print('## Evaluate network:')
     results = model.evaluate(train_input, train_output_piece, batch_size=32)
@@ -176,7 +168,7 @@ def test_network():
     print(predictions)
     print("predictions[0]", predictions[0])
     print()
-    print( np.argmax(predictions[0]))
+    print(np.argmax(predictions[0]))
     # for i in range(len(predictions)):
     #     print("test_output ", train_output_piece[i], " pred ", np.argmax(predictions[i][0]))
     #     print("test_output ", train_output_move[i], " pred ", np.argmax(predictions[i][0]))
@@ -185,7 +177,6 @@ def test_network():
 
 
 if __name__ == "__main__":
-
     create_network()
 
     # fit_network()

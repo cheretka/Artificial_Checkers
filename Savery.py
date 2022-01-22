@@ -3,15 +3,14 @@ import math
 
 
 def save_board_to_file(board, file_name):
-
     file = open(file_name, "a+")
     np.savetxt(file, board)
     file.close()
 
     return board
 
-def save_smth_to_file(smth, file_name):
 
+def save_smth_to_file(smth, file_name):
     num_list = np.array([smth])
     file = open(file_name, "a+")
     np.savetxt(file, num_list)
@@ -25,6 +24,7 @@ def load_board_from_file(file_name):
     input_data = np.loadtxt(file_name).reshape(-1, 32)
 
     return input_data
+
 
 def load_smth_from_file(file_name):
     input_data = np.loadtxt(file_name)
@@ -54,7 +54,6 @@ def load_smth_from_file(file_name):
 #     file.close()
 #
 #     return piece_list
-
 
 
 # def save_board(checkers, sample, number_of_games):
