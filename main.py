@@ -119,6 +119,7 @@ def fun_user(checkers):
 
 
 if __name__ == "__main__":
+
     print('Welcome to English draughts (checkers)!')
 
     checkers = Checkers_state()
@@ -135,27 +136,28 @@ if __name__ == "__main__":
         selected_move = 0
 
         if checkers.get_current_player() == 'r':
-
-            selected_move = get_move_from_network(checkers)
+            print("r")
+            selected_move = get_rezult_from_network_r(checkers)
             print("selected_move ", selected_move)
-            print(checkers.get_possible_moves())
-            # for move in checkers.get_possible_moves():
-            #     print(move)
+            # print(checkers.get_possible_moves())
+
 
             selected_move = check(selected_move, checkers.get_possible_moves())
-            if selected_move is None:
-                print("\n-------- the selected move is not possible -> MCTS  ")
 
-                if len(checkers.get_possible_moves()) == 1:
-                    selected_move = checkers.get_possible_moves()[0]
-                else:
-                    selected_move = select_move(checkers, red_experience)
+            if selected_move is None:
+                print("\n\n\n----------------------------------------------- the selected move is not possible -> MCTS  ")
+                exit()
+                # if len(checkers.get_possible_moves()) == 1:
+                #     selected_move = checkers.get_possible_moves()[0]
+                # else:
+                #     selected_move = select_move(checkers, red_experience)
 
 
 
         else:
-            # selected_move = select_move(checkers, white_experience)
-            selected_move = fun_user(checkers)
+            print("w")
+            selected_move = select_move(checkers, 50)
+            # selected_move = fun_user(checkers)
 
 
 

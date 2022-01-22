@@ -15,7 +15,6 @@ class Checkers_state:
                       [' ', 'a', ' ', 'a', ' ', 'a', ' ', 'a'],
                       ['a', ' ', 'a', ' ', 'a', ' ', 'a', ' ']]
 
-        #
 
         self.current_player = "r"
         self.steps_without_hitting = {"r": 0, "a": 0}
@@ -49,7 +48,7 @@ class Checkers_state:
 
     def get_win(self):
 
-        if self.steps_without_hitting["a"] >= 15 and self.steps_without_hitting["r"] >= 15:
+        if self.steps_without_hitting["a"] >= 7 and self.steps_without_hitting["r"] >= 7:
             return 'remis'
 
         if len(self.get_possible_moves()) == 0:

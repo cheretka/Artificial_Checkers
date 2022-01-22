@@ -27,38 +27,38 @@ def randomize(checkers):
 
 if __name__ == "__main__":
 
-    print("\n---------------------------------  rand  --------------------------------")
+    # print("\n---------------------------------  rand  --------------------------------")
+    #
+    # suma = 0.0
+    # n = 0
+    # for i in range(30):
+    #     checkers = Checkers_state()
+    #
+    #     while checkers.get_win() is None:
+    #         n = n+1
+    #         start = time.time()
+    #
+    #         selected_move = randomize(checkers)
+    #
+    #         end = time.time()
+    #         suma = suma + (end - start)
+    #
+    #         checkers = checkers.make_move(selected_move)
+    #     print(n)
+    #
+    # average = suma / n
+    # print("---------  rand  ----------  ", suma, "(s) / ", n, " = ", average, "(s)")
+    #
+    #
 
-    suma = 0.0
-    n = 0
-    for i in range(30):
-        checkers = Checkers_state()
-
-        while checkers.get_win() is None:
-            n = n+1
-            start = time.time()
-
-            selected_move = randomize(checkers)
-
-            end = time.time()
-            suma = suma + (end - start)
-
-            checkers = checkers.make_move(selected_move)
-        print(n)
-
-    average = suma / n
-    print("---------  rand  ----------  ", suma, "(s) / ", n, " = ", average, "(s)")
 
 
-
-
-
-    for iter in range(1, 11):
+    for iter in range(5, 9):
         print("\n\n---------------------------------  mm", iter, "  --------------------------------")
 
         suma = 0.0
         n = 0
-        for i in range(30):
+        for i in range(3):
             checkers = Checkers_state()
 
             while checkers.get_win() is None:
@@ -79,12 +79,12 @@ if __name__ == "__main__":
 
 
 
-    for iter in range(1, 11):
+    for iter in range(5, 9):
         print("\n\n---------------------------------  ab", iter, "  --------------------------------")
 
         suma = 0.0
         n = 0
-        for i in range(30):
+        for i in range(3):
             checkers = Checkers_state()
 
             while checkers.get_win() is None:
@@ -104,26 +104,26 @@ if __name__ == "__main__":
 
 
 
-
-    for iter in range(100, 2500, 100):
-        print("\n\n---------------------------------  mcts", iter, "  --------------------------------")
-
-        suma = 0.0
-        n = 0
-        for i in range(30):
-            checkers = Checkers_state()
-
-            while checkers.get_win() is None:
-                n = n + 1
-                start = time.time()
-
-                selected_move = mcts(checkers, iter)
-
-                end = time.time()
-                suma = suma + (end - start)
-
-                checkers = checkers.make_move(selected_move)
-            print(n)
-
-        average = suma / n
-        print("---------  mcts", iter, "  ----------  ", suma, "(s) / ", n, " = ", average, "(s)")
+    #
+    # for iter in range(100, 2500, 100):
+    #     print("\n\n---------------------------------  mcts", iter, "  --------------------------------")
+    #
+    #     suma = 0.0
+    #     n = 0
+    #     for i in range(30):
+    #         checkers = Checkers_state()
+    #
+    #         while checkers.get_win() is None:
+    #             n = n + 1
+    #             start = time.time()
+    #
+    #             selected_move = mcts(checkers, iter)
+    #
+    #             end = time.time()
+    #             suma = suma + (end - start)
+    #
+    #             checkers = checkers.make_move(selected_move)
+    #         print(n)
+    #
+    #     average = suma / n
+    #     print("---------  mcts", iter, "  ----------  ", suma, "(s) / ", n, " = ", average, "(s)")

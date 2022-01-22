@@ -25,12 +25,12 @@ def create_network():
 
     print("\n## Compile network:")
     model.compile(optimizer=keras.optimizers.RMSprop(),
-                  loss=keras.losses.SparseCategoricalCrossentropy(),
-                  metrics=[keras.metrics.SparseCategoricalAccuracy()])
+                  loss=keras.losses.MeanSquaredError(),
+                  metrics=[keras.metrics.MeanSquaredError()])
 
     model.summary()
 
-    model.save("model_move")
+    model.save("model_move_3")
     print("end - out create_network")
 
 
@@ -49,7 +49,7 @@ def moves_to_tables(input_piece):
 
 
 def fit_network():
-    model = keras.models.load_model("model_move")
+    model = keras.models.load_model("model_move_3")
 
     print("\n## Load and reshape input/output data:")
     sample = 16
@@ -60,18 +60,22 @@ def fit_network():
     print("train_input_board ", train_input_board)
     print("shape ", train_input_board.shape)
     print()
+
+
     train_input_piece = load_piece(sample, number_of_games)
     train_input_piece = moves_to_tables(train_input_piece)
     train_input_piece = train_input_piece.astype('float32')
     print("train_input_piece ", train_input_piece)
     print("shape ", train_input_piece.shape)
     print()
+
+
     train_output_move = load_move(sample, number_of_games)
     train_output_move = train_output_move.astype('float32')
     print("train_output_move ", train_output_move)
     print("shape ", train_output_move.shape)
     print()
-
+    exit()
     # Зарезервируем 10,000 примеров для валидации
     # border = -400
     # validation_input = train_input_board[border:]
@@ -107,7 +111,7 @@ def fit_network():
     # значений потерь и метрик во время обучения
     print('\nhistory dict:', history.history)
 
-    model.save("model_move")
+    model.save("model_move_3")
     print("end - out")
 
 
@@ -115,7 +119,7 @@ def fit_network():
 
 
 def get_move_from_network(checkers):
-    model = keras.models.load_model("my_model")
+    model = keras.models.load_model("model_move_3")
 
     board_list = []
 
@@ -167,13 +171,13 @@ def get_move_from_network(checkers):
     y1 = math.floor(move / 4)
     y2 = ((move % 4) * 2 + 1) if y1 % 2 == 0 else ((move % 4) * 2)
 
-    model.save("my_model")
+    model.save("model_move_3")
 
     return [[x1, x2], [y1, y2]]
 
 
 def test_network():
-    model = keras.models.load_model("my_model")
+    model = keras.models.load_model("model_move_3")
 
     print("\n## Load and reshape input/output data:")
     sample = 1
@@ -221,10 +225,10 @@ def test_network():
 
 
 if __name__ == "__main__":
-    # create_network()
+    create_network()
     # fit_network()
 
     # test_network()
 
-    model = keras.models.load_model("model_move")
-    model.summary()
+    # model = keras.models.load_model("model_move_3")
+    # model.summary()
