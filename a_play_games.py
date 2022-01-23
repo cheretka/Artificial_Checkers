@@ -8,7 +8,7 @@ import random
 
 ile_good = 0
 
-def write_to_file(board_1, piece_1, move_1, board_2, piece_2):
+def write_to_file(board_1, piece_1, move_1, board_2, piece_2, move_2):
     global ile_good
 
     if ile_good >= 10000:
@@ -24,6 +24,11 @@ def write_to_file(board_1, piece_1, move_1, board_2, piece_2):
 
         data_from_file = np.loadtxt("correct_move_1.txt")
         file = open("correct_move_1.txt", "w")
+        np.savetxt(file, data_from_file[2000:])
+        file.close()
+
+        data_from_file = np.loadtxt("correct_move_2.txt")
+        file = open("correct_move_2.txt", "w")
         np.savetxt(file, data_from_file[2000:])
         file.close()
 
@@ -45,6 +50,7 @@ def write_to_file(board_1, piece_1, move_1, board_2, piece_2):
     save_smth_to_file(move_1, "correct_move_1.txt")
     save_board_to_file(board_2, "correct_board_2.txt")
     save_smth_to_file(piece_2, "correct_piece_2.txt")
+    save_smth_to_file(piece_2, "correct_move_2.txt")
 
     ile_good +=1
 
@@ -84,7 +90,7 @@ def play_game_and_write_moves():
                 r_board_2, r_piece_2, r_move_2 = get_rezult_from_network(checkers, model_piece, model_move, 1)
 
                 if r_board_1 is not None:
-                    write_to_file(r_board_1, r_piece_1, r_move_1, r_board_2, r_piece_2)
+                    write_to_file(r_board_1, r_piece_1, r_move_1, r_board_2, r_piece_2, r_move_2)
                     # print(r_move_2)
 
                 r_board_1 = r_board_2
@@ -102,7 +108,7 @@ def play_game_and_write_moves():
                 a_board_2, a_piece_2, a_move_2 = get_rezult_from_network(checkers, model_piece, model_move, 1)
 
                 if a_board_1 is not None:
-                    write_to_file(a_board_1, a_piece_1, a_move_1, a_board_2, a_piece_2)
+                    write_to_file(a_board_1, a_piece_1, a_move_1, a_board_2, a_piece_2, a_move_2)
                     # print(a_move_2)
 
                 a_board_1 = a_board_2
@@ -158,7 +164,7 @@ def play_game_and_write_moves():
         num_list = np.array(board_list)
 
         if checkers.get_win() == 'r':
-            write_to_file(r_board_1, r_piece_1, r_move_1, num_list, 100)
+            write_to_file(r_board_1, r_piece_1, r_move_1, num_list, 100, )
             write_to_file(a_board_1, a_piece_1, a_move_1, num_list, -100)
 
         elif checkers.get_win() == 'a':
@@ -207,7 +213,7 @@ def play_rand_game_and_write_moves():
                     r_board_2, r_piece_2, r_move_2 = get_rezult_from_rand(checkers)
 
                 if r_board_1 is not None:
-                    write_to_file(r_board_1, r_piece_1, r_move_1, r_board_2, r_piece_2)
+                    write_to_file(r_board_1, r_piece_1, r_move_1, r_board_2, r_piece_2, r_move_2)
                     # print(r_move_2)
 
                 r_board_1 = r_board_2
@@ -228,7 +234,7 @@ def play_rand_game_and_write_moves():
                     a_board_2, a_piece_2, a_move_2 = get_rezult_from_rand(checkers)
 
                 if a_board_1 is not None:
-                    write_to_file(a_board_1, a_piece_1, a_move_1, a_board_2, a_piece_2)
+                    write_to_file(a_board_1, a_piece_1, a_move_1, a_board_2, a_piece_2, a_move_2)
                     # print(a_move_2)
 
                 a_board_1 = a_board_2
@@ -286,16 +292,16 @@ def play_rand_game_and_write_moves():
         num_list = np.array(board_list)
 
         if checkers.get_win() == 'r':
-            write_to_file(r_board_1, r_piece_1, r_move_1, num_list, 100)
-            write_to_file(a_board_1, a_piece_1, a_move_1, num_list, -100)
+            write_to_file(r_board_1, r_piece_1, r_move_1, num_list, 1, 100)
+            write_to_file(a_board_1, a_piece_1, a_move_1, num_list, 1, -100)
 
         elif checkers.get_win() == 'a':
-            write_to_file(r_board_1, r_piece_1, r_move_1, num_list, -100)
-            write_to_file(a_board_1, a_piece_1, a_move_1, num_list, 100)
+            write_to_file(r_board_1, r_piece_1, r_move_1, num_list, 1, -100)
+            write_to_file(a_board_1, a_piece_1, a_move_1, num_list, 1, 100)
 
         else:
-            write_to_file(r_board_1, r_piece_1, r_move_1, num_list, 50)
-            write_to_file(a_board_1, a_piece_1, a_move_1, num_list, 50)
+            write_to_file(r_board_1, r_piece_1, r_move_1, num_list, 1, 50)
+            write_to_file(a_board_1, a_piece_1, a_move_1, num_list, 1, 50)
 
     # print("\n----------------------------------------------------------------------")
     print("         PART 1_2     end ")
