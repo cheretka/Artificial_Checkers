@@ -6,13 +6,47 @@ from main2 import *
 import random
 
 
+ile_good = 0
+
 def write_to_file(board_1, piece_1, move_1, board_2, piece_2):
-    # print("write to file")
+    global ile_good
+
+    if ile_good >= 10000:
+        data_from_file = np.loadtxt("correct_piece_1.txt")
+        file = open("correct_piece_1.txt", "w")
+        np.savetxt(file, data_from_file[2000:])
+        file.close()
+
+        data_from_file = np.loadtxt("correct_piece_2.txt")
+        file = open("correct_piece_2.txt", "w")
+        np.savetxt(file, data_from_file[2000:])
+        file.close()
+
+        data_from_file = np.loadtxt("correct_move_1.txt")
+        file = open("correct_move_1.txt", "w")
+        np.savetxt(file, data_from_file[2000:])
+        file.close()
+
+        data_from_file = np.loadtxt("correct_board_1.txt")
+        file = open("correct_board_1.txt", "w")
+        np.savetxt(file, data_from_file[(32 * 2000):])
+        file.close()
+
+        data_from_file = np.loadtxt("correct_board_2.txt")
+        file = open("correct_board_2.txt", "w")
+        np.savetxt(file, data_from_file[(32 * 2000):])
+        file.close()
+
+        ile_good -= 2000
+
+
     save_board_to_file(board_1, "correct_board_1.txt")
     save_smth_to_file(piece_1, "correct_piece_1.txt")
     save_smth_to_file(move_1, "correct_move_1.txt")
     save_board_to_file(board_2, "correct_board_2.txt")
     save_smth_to_file(piece_2, "correct_piece_2.txt")
+
+    ile_good +=1
 
 
 def check(network_move, all_moves):
@@ -25,12 +59,15 @@ def check(network_move, all_moves):
 
 def play_game_and_write_moves():
 
-    print("\n\n         PART 1_2    start   play_game_and_write_moves\n")
+    print("   PART 1_2    start   play_game_and_write_moves")
+
+    model_piece = keras.models.load_model("model_piece_3")
+    model_move = keras.models.load_model("model_move_3")
 
     for i in range(1):
 
         checkers = Checkers_state()
-        checkers.print()
+        # checkers.print()
 
         r_board_1 = None
         r_piece_1 = None
@@ -44,7 +81,7 @@ def play_game_and_write_moves():
 
             if checkers.get_current_player() == 'r':
 
-                r_board_2, r_piece_2, r_move_2 = get_rezult_from_network(checkers)
+                r_board_2, r_piece_2, r_move_2 = get_rezult_from_network(checkers, model_piece, model_move, 1)
 
                 if r_board_1 is not None:
                     write_to_file(r_board_1, r_piece_1, r_move_1, r_board_2, r_piece_2)
@@ -62,7 +99,7 @@ def play_game_and_write_moves():
 
             else:
 
-                a_board_2, a_piece_2, a_move_2 = get_rezult_from_network(checkers)
+                a_board_2, a_piece_2, a_move_2 = get_rezult_from_network(checkers, model_piece, model_move, 1)
 
                 if a_board_1 is not None:
                     write_to_file(a_board_1, a_piece_1, a_move_1, a_board_2, a_piece_2)
@@ -80,7 +117,7 @@ def play_game_and_write_moves():
                 selected_move = [[7 - x1, 7 - x2], [7 - y1, 7 - y2]]
                 # print(selected_move1, "  <7-x>  ", selected_move)
 
-            print("selected_move ", selected_move)
+            # print("selected_move ", selected_move)
             selected_move = check(selected_move, checkers.get_possible_moves())
             if selected_move is None:
                 print("\n-------- the selected move is not possible -> MCTS  ")
@@ -132,20 +169,23 @@ def play_game_and_write_moves():
             write_to_file(r_board_1, r_piece_1, r_move_1, num_list, 50)
             write_to_file(a_board_1, a_piece_1, a_move_1, num_list, 50)
 
-    print("\n----------------------------------------------------------------------")
+    # print("\n----------------------------------------------------------------------")
     print("count_of_bad_moves ", get_count_of_bad_moves())
-    print("zero_count_of_bad_moves ", zero_count_of_bad_moves())
-    print("\n\n         PART 1     end \n")
+    # print("zero_count_of_bad_moves ", zero_count_of_bad_moves())
+    print("         PART 1     end ")
 
 
 def play_rand_game_and_write_moves():
 
-    print("\n\n         PART 1    start   play_rand_game_and_write_moves\n")
+    print("        PART 1_2    start   play_rand_game_and_write_moves")
+
+    model_piece = keras.models.load_model("model_piece_3")
+    model_move = keras.models.load_model("model_move_3")
 
     for i in range(1):
 
         checkers = Checkers_state()
-        checkers.print()
+        # checkers.print()
 
         r_board_1 = None
         r_piece_1 = None
@@ -161,8 +201,8 @@ def play_rand_game_and_write_moves():
 
             if checkers.get_current_player() == 'r':
 
-                if random.randint(1, 2) == 1:
-                    r_board_2, r_piece_2, r_move_2 = get_rezult_from_network(checkers)
+                if random.randint(1, 4) == 1:
+                    r_board_2, r_piece_2, r_move_2 = get_rezult_from_network(checkers, model_piece, model_move, 0)
                 else:
                     r_board_2, r_piece_2, r_move_2 = get_rezult_from_rand(checkers)
 
@@ -182,8 +222,8 @@ def play_rand_game_and_write_moves():
 
             else:
 
-                if random.randint(1, 2) == 1:
-                    a_board_2, a_piece_2, a_move_2 = get_rezult_from_network(checkers)
+                if random.randint(1, 4) == 1:
+                    a_board_2, a_piece_2, a_move_2 = get_rezult_from_network(checkers, model_piece, model_move, 0)
                 else:
                     a_board_2, a_piece_2, a_move_2 = get_rezult_from_rand(checkers)
 
@@ -203,7 +243,7 @@ def play_rand_game_and_write_moves():
                 selected_move = [[7 - x1, 7 - x2], [7 - y1, 7 - y2]]
                 # print(selected_move1, "  <7-x>  ", selected_move)
 
-            print("selected_move ", selected_move)
+            # print("selected_move ", selected_move)
             selected_move = check(selected_move, checkers.get_possible_moves())
             if selected_move is None:
                 print("\n-------- the selected move is not possible -> MCTS  ")
@@ -257,5 +297,5 @@ def play_rand_game_and_write_moves():
             write_to_file(r_board_1, r_piece_1, r_move_1, num_list, 50)
             write_to_file(a_board_1, a_piece_1, a_move_1, num_list, 50)
 
-    print("\n----------------------------------------------------------------------")
-    print("\n\n         PART 1_2     end \n")
+    # print("\n----------------------------------------------------------------------")
+    print("         PART 1_2     end ")

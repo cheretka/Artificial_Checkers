@@ -5,7 +5,6 @@ from main2 import *
 
 count_of_bad_moves = 0
 
-
 def get_count_of_bad_moves():
     global count_of_bad_moves
     return count_of_bad_moves
@@ -16,18 +15,64 @@ def zero_count_of_bad_moves():
     return count_of_bad_moves
 
 
+ile_p_bad = 0
+ile_m_bad = 0
+
 def write_to_file_bad_piece(board, piece):
+    global ile_p_bad
+
+    if ile_p_bad >= 100000:
+        data_from_file = np.loadtxt("p_faulty_piece.txt")
+        file = open("p_faulty_piece.txt", "w")
+        np.savetxt(file, data_from_file[20000:])
+        file.close()
+
+        data_from_file = np.loadtxt("p_faulty_board.txt")
+        file = open("p_faulty_board.txt", "w")
+        np.savetxt(file, data_from_file[(32 * 20000):])
+        file.close()
+
+        ile_p_bad -= 20000
+
+
     save_board_to_file(board, "p_faulty_board.txt")
     save_smth_to_file(piece, "p_faulty_piece.txt")
+    ile_p_bad += 1
 
 
 def write_to_file_bad_move(board, piece, move):
+    global ile_m_bad
+
+    if ile_m_bad >= 100000:
+
+        data_from_file = np.loadtxt("m_faulty_piece.txt")
+        file = open("m_faulty_piece.txt", "w")
+        np.savetxt(file, data_from_file[20000:])
+        file.close()
+
+        data_from_file = np.loadtxt("m_faulty_move.txt")
+        file = open("m_faulty_move.txt", "w")
+        np.savetxt(file, data_from_file[20000:])
+        file.close()
+
+        data_from_file = np.loadtxt("m_faulty_board.txt")
+        file = open("m_faulty_board.txt", "w")
+        np.savetxt(file, data_from_file[(32*20000):])
+        file.close()
+
+        ile_m_bad -= 20000
+
+
     save_board_to_file(board, "m_faulty_board.txt")
     save_smth_to_file(piece, "m_faulty_piece.txt")
     save_smth_to_file(move, "m_faulty_move.txt")
+    ile_m_bad += 1
 
 
-def get_rezult_from_network(checkers):
+
+
+
+def get_rezult_from_network(checkers, model_piece, model_move, is_net_and_net):
     global count_of_bad_moves
     # checkers_copy = Checkers_state()
 
@@ -78,11 +123,11 @@ def get_rezult_from_network(checkers):
 
     train_input = np.reshape(train_input, (1, 32))
 
-    model_piece = keras.models.load_model("model_piece_3")
+    # model_piece = keras.models.load_model("model_piece_3")
     predictions_piece = model_piece.predict(train_input)
     predictions_piece = predictions_piece[0]
     # print("predictions_piece: ", predictions_piece)
-    model_piece.save("model_piece_3")
+    # model_piece.save("model_piece_3")
 
     possible_moves = checkers.get_possible_moves()
 
@@ -120,7 +165,8 @@ def get_rezult_from_network(checkers):
             break
         else:
             write_to_file_bad_piece(num_list, piece)
-            count_of_bad_moves += 1
+            if is_net_and_net == 1:
+                count_of_bad_moves += 1
             # print(".")
 
     # x1 = math.floor(good_piece / 4)
@@ -131,11 +177,11 @@ def get_rezult_from_network(checkers):
     # print("piece_table: ", piece_table)
     piece_table = piece_table.astype('float32')
 
-    model_move = keras.models.load_model("model_move_3")
+    # model_move = keras.models.load_model("model_move_3")
     predictions_move = model_move.predict([piece_table, train_input])
     predictions_move = predictions_move[0]
     # print("predictions_move: ", predictions_move)
-    model_move.save("model_move_3")
+    # model_move.save("model_move_3")
 
     good_move = 0
 
@@ -164,19 +210,12 @@ def get_rezult_from_network(checkers):
             break
         else:
             write_to_file_bad_move(num_list, good_piece, move)
-            count_of_bad_moves += 1
+            if is_net_and_net == 1:
+                count_of_bad_moves += 1
             # print(".")
 
-    # y1 = math.floor(good_move / 4)
-    # y2 = ((good_move % 4) * 2 + 1) if y1 % 2 == 0 else ((good_move % 4) * 2)
 
-    # if checkers.get_current_player() == "a":
-    #     x1 = 7 - x1
-    #     x2 = 7 - x2
-    #     y1 = 7 - y1
-    #     y2 = 7 - y2
 
-    # return [[x1, x2], [y1, y2]]
     return num_list, good_piece, good_move;
 
 
@@ -241,12 +280,12 @@ def get_rezult_from_rand(checkers):
 
 
     rand_move = possible_moves[random.randint(0, len(possible_moves)-1)]
-    print("rand_move ", rand_move)
+    # print("rand_move ", rand_move)
 
     good_piece = math.floor(rand_move[0][0] * 4 + rand_move[0][1] / 2)
-    print("good_piece ", good_piece)
+    # print("good_piece ", good_piece)
     good_move = math.floor(rand_move[1][0] * 4 + rand_move[1][1] / 2)
-    print("good_move ", good_move)
+    # print("good_move ", good_move)
 
 
 

@@ -14,7 +14,6 @@ def save_smth_to_file(smth, file_name):
     num_list = np.array([smth])
     file = open(file_name, "a+")
     np.savetxt(file, num_list)
-    # file.write(str(smth))
     file.close()
 
     return num_list
@@ -30,6 +29,8 @@ def load_smth_from_file(file_name):
     input_data = np.loadtxt(file_name)
 
     return input_data
+
+
 
 # def save_board(board, file_name):
 #
