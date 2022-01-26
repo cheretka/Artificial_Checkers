@@ -15,14 +15,11 @@ class Checkers_state:
                       [' ', 'a', ' ', 'a', ' ', 'a', ' ', 'a'],
                       ['a', ' ', 'a', ' ', 'a', ' ', 'a', ' ']]
 
-        #
-
         self.current_player = "r"
         self.steps_without_hitting = {"r": 0, "a": 0}
 
 
-
-    def print(self, last_move=[-1, -1]):
+    def print(self, last_move = [-1, -1]):
 
         # print(self.get_current_player() + " moves:")
 
@@ -34,11 +31,14 @@ class Checkers_state:
             sys.stdout.write("{}   |".format(row))
             for col in range(8):
                 if self.board[row][col].upper() == 'R':
-                    sys.stdout.write('\x1b[1;30;41m' + '  {}  '.format(self.board[row][col]) + "\033[0m")
+                    sys.stdout.write(
+                        '\x1b[1;30;41m' + '  {}  '.format(self.board[row][col]) + "\033[0m")
                 elif self.board[row][col].upper() == 'A':
-                    sys.stdout.write('\x1b[1;30;47m' + '  {}  '.format(self.board[row][col]) + "\033[0m")
+                    sys.stdout.write(
+                        '\x1b[1;30;47m' + '  {}  '.format(self.board[row][col]) + "\033[0m")
                 elif row == last_move[0] and col == last_move[1]:
-                    sys.stdout.write('\x1b[1;30;43m' + '  {}  '.format(self.board[row][col]) + "\033[0m")
+                    sys.stdout.write(
+                        '\x1b[1;30;43m' + '  {}  '.format(self.board[row][col]) + "\033[0m")
                 else:
                     sys.stdout.write('  {}  '.format(self.board[row][col]))
                 sys.stdout.write('|')
@@ -49,7 +49,7 @@ class Checkers_state:
 
     def get_win(self):
 
-        if self.steps_without_hitting["a"] >= 15 and self.steps_without_hitting["r"] >= 15:
+        if self.steps_without_hitting["a"] >= 7 and self.steps_without_hitting["r"] >= 7:
             return 'remis'
 
         if len(self.get_possible_moves()) == 0:
@@ -97,17 +97,16 @@ class Checkers_state:
         return newState
 
 
-
-
     def get_possible_moves(self):
 
-        delta = [[-1, -1], [-1, 1], [1, -1], [1, 1]] if self.current_player == 'a' \
-            else [[1, -1], [1, 1], [-1, -1], [-1, 1]]
+        delta = [[-1, -1], [-1, 1], [1, -1], [1, 1]] if self.current_player == 'a' else [[1, -1],
+                                                                                         [1, 1],
+                                                                                         [-1, -1],
+                                                                                         [-1, 1]]
 
         list_jump_moves = self.get_possible_multi_jump_moves()
         if len(list_jump_moves) > 0:
             return list_jump_moves
-
 
         list_simple_moves = []
 
@@ -123,7 +122,8 @@ class Checkers_state:
 
                         new_x = x + delta[index][0]
                         new_y = y + delta[index][1]
-                        if 0 <= new_x < len(self.board) and 0 <= new_y < len(self.board[x]) and self.board[new_x][new_y] == ' ':
+                        if 0 <= new_x < len(self.board) and 0 <= new_y < len(self.board[x]) and \
+                                self.board[new_x][new_y] == ' ':
                             list_simple_moves.append([[x, y], [new_x, new_y]])
 
         return list_simple_moves
@@ -138,18 +138,21 @@ class Checkers_state:
 
                 if self.board[x][y].lower() == self.current_player:
 
-                    list_of_moves_1 = self.get_possible_jump_for_position(x, y, self.get_current_player())
+                    list_of_moves_1 = self.get_possible_jump_for_position(x, y,
+                                                                          self.get_current_player())
                     all_lists = []
 
-                    if len(list_of_moves_1)==0:
+                    if len(list_of_moves_1) == 0:
                         continue
 
                     for move1 in list_of_moves_1:
 
                         new_chekers = self.make_move(move1)
-                        list_of_moves_2 = new_chekers.get_possible_jump_for_position(move1[1][0], move1[1][1], self.get_current_player())
+                        list_of_moves_2 = new_chekers.get_possible_jump_for_position(move1[1][0],
+                                                                                     move1[1][1],
+                                                                                     self.get_current_player())
 
-                        if len(list_of_moves_2)==0:
+                        if len(list_of_moves_2) == 0:
                             all_lists.append(move1)
                             continue
 
@@ -158,7 +161,8 @@ class Checkers_state:
                             move_1_2.append(move2[1])
 
                             new_chekers2 = new_chekers.make_move(move2)
-                            list_of_moves_3 = new_chekers2.get_possible_jump_for_position(move2[1][0], move2[1][1], self.get_current_player())
+                            list_of_moves_3 = new_chekers2.get_possible_jump_for_position(
+                                move2[1][0], move2[1][1], self.get_current_player())
 
                             if len(list_of_moves_3) == 0:
                                 all_lists.append(move_1_2)
@@ -169,7 +173,8 @@ class Checkers_state:
                                 move_1_2_3.append(move3[1])
 
                                 new_chekers3 = new_chekers2.make_move(move3)
-                                list_of_moves_4 = new_chekers3.get_possible_jump_for_position(move3[1][0], move3[1][1], self.get_current_player())
+                                list_of_moves_4 = new_chekers3.get_possible_jump_for_position(
+                                    move3[1][0], move3[1][1], self.get_current_player())
 
                                 if len(list_of_moves_4) == 0:
                                     all_lists.append(move_1_2_3)
@@ -181,7 +186,7 @@ class Checkers_state:
 
                                     all_lists.append(move_1_2_3_4)
 
-                    if len(all_lists)>0:
+                    if len(all_lists) > 0:
                         for list_moves in all_lists:
                             list_jump_moves.append(list_moves)
 
@@ -191,8 +196,8 @@ class Checkers_state:
     def get_possible_jump_for_position(self, x, y, pl):
 
         opponent_player = 'a' if pl == 'r' else 'r'
-        delta = [[-1, -1], [-1, 1], [1, -1], [1, 1]] if pl == 'a' \
-            else [[1, -1], [1, 1], [-1, -1], [-1, 1]]
+        delta = [[-1, -1], [-1, 1], [1, -1], [1, 1]] if pl == 'a' else [[1, -1], [1, 1], [-1, -1],
+                                                                        [-1, 1]]
 
         list_moves = []
 
@@ -212,12 +217,12 @@ class Checkers_state:
                         new_x = new_x + delta[index][0]
                         new_y = new_y + delta[index][1]
 
-                        if 0 <= new_x < len(self.board) and 0 <= new_y < len(self.board[x]) and self.board[new_x][new_y] == ' ':
+                        if 0 <= new_x < len(self.board) and 0 <= new_y < len(self.board[x]) and \
+                                self.board[new_x][new_y] == ' ':
                             new_move = [[x, y], [new_x, new_y]]
                             list_moves.append(new_move)
 
         return list_moves
-
 
 
     def get_current_player(self):
