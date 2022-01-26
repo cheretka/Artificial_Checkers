@@ -35,8 +35,6 @@ def create_network():
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-
-
 def moves_to_tables(input_piece):
     print(input_piece.shape[0])
     table_zeros = np.zeros((input_piece.shape[0], 32))
@@ -45,8 +43,6 @@ def moves_to_tables(input_piece):
         table_zeros[i, int(input_piece[i])] = 1
 
     return table_zeros
-
-
 def fit_network():
     model = keras.models.load_model("model_move_3")
 
@@ -108,13 +104,9 @@ def fit_network():
     # значений потерь и метрик во время обучения
     print('\nhistory dict:', history.history)
 
-    model.save("model_move_3")
+    model.save("model_move_5")
     print("end - out")
-
-
 # ----------------------------------------------------------------------------------------------------------------------
-
-
 def get_move_from_network(checkers):
     model = keras.models.load_model("model_move_3")
 
@@ -171,8 +163,6 @@ def get_move_from_network(checkers):
     model.save("model_move_3")
 
     return [[x1, x2], [y1, y2]]
-
-
 def test_network():
     model = keras.models.load_model("model_move_3")
 

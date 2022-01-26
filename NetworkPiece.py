@@ -34,8 +34,6 @@ def create_network():
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-
-
 def fit_network():
     model = keras.models.load_model("model_piece_3")
 
@@ -70,11 +68,7 @@ def fit_network():
 
     model.save("model_piece_3")
     print("end - out fit_network")
-
-
-# ----------------------------------------------------------------------------------------------------------------------
-
-
+# ---------------------------------------------------------------------------------------------------------------------
 def get_move_from_network(checkers):
     model = keras.models.load_model("model_piece_3")
 
@@ -131,8 +125,6 @@ def get_move_from_network(checkers):
     model.save("model_piece_3")
 
     return [[x1, x2], [y1, y2]]
-
-
 def test_network():
     model = keras.models.load_model("model_piece_3")
 

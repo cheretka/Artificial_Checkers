@@ -8,7 +8,7 @@ def fit_piece_network_bad_choice():
     # print("start - fit_piece_network_bad_choice")
 
     data_boards = load_board_from_file("p_faulty_board.txt")
-    rand_indexes = random.sample(range(len(data_boards)), 4096)
+    rand_indexes = random.sample(range(len(data_boards)-1), 2048)
     input_boards = []
     for index in rand_indexes:
         input_boards.append(data_boards[index])
@@ -22,7 +22,7 @@ def fit_piece_network_bad_choice():
     for index in rand_indexes:
         train_pieces.append(data_pieces[index])
 
-    for i in range(4096):
+    for i in range(2048):
         output_pieces[i][train_pieces[i]] = -1
 
     model_piece.fit(input_boards, y = output_pieces, batch_size = 32, epochs = 1, verbose = 0)
@@ -34,7 +34,7 @@ def fit_move_network_bad_choice():
     # print("start - fit_move_network_bad_choice")
 
     data_boards = load_board_from_file("m_faulty_board.txt")
-    rand_indexes = random.sample(range(len(data_boards)), 4096)
+    rand_indexes = random.sample(range(len(data_boards)-1), 4096)
     input_boards = []
     for index in rand_indexes:
         input_boards.append(data_boards[index])
@@ -71,7 +71,7 @@ def fit_piece_network_good_choice():
     # print("start - fit_piece_network_good_choice")
 
     data_boards_1 = load_board_from_file("correct_board_1.txt")
-    rand_indexes = random.sample(range(len(data_boards_1)), 512)
+    rand_indexes = random.sample(range(len(data_boards_1)-1), 512)
     boards_1 = []
     for index in rand_indexes:
         boards_1.append(data_boards_1[index])
@@ -124,7 +124,7 @@ def fit_move_network_good_choice():
     # print("start - fit_piece_network_good_choice")
 
     data_boards_1 = load_board_from_file("correct_board_1.txt")
-    rand_indexes = random.sample(range(len(data_boards_1)), 512)
+    rand_indexes = random.sample(range(len(data_boards_1)-1), 512)
     boards_1 = []
     for index in rand_indexes:
         boards_1.append(data_boards_1[index])

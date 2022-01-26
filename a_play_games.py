@@ -128,7 +128,7 @@ def play_game_and_write_moves():
                 print("board")
                 print(checkers.current_player)
                 print(checkers.board)
-                checkers.print()
+                # checkers.print()
                 print("selected_move ", selected_move)
                 for i in checkers.get_possible_moves():
                     print(i)
@@ -208,7 +208,7 @@ def play_rand_game_and_write_moves():
 
             if checkers.get_current_player() == 'r':
 
-                if random.randint(1, 3) == 1:
+                if random.randint(1, 2) == 1:
                     r_board_2, r_piece_2, r_move_2 = get_rezult_from_rand(checkers)
                 else:
                     # r_board_2, r_piece_2, r_move_2 = get_rezult_from_rand(checkers)
@@ -231,7 +231,7 @@ def play_rand_game_and_write_moves():
 
             else:
 
-                if random.randint(1, 3) == 1:
+                if random.randint(1, 2) == 1:
                     a_board_2, a_piece_2, a_move_2 = get_rezult_from_rand(checkers)
                 else:
                     a_board_2, a_piece_2, a_move_2 = get_rezult_from_network(checkers, model_piece,
@@ -259,7 +259,7 @@ def play_rand_game_and_write_moves():
                 print("board")
                 print(checkers.current_player)
                 print(checkers.board)
-                checkers.print()
+                # checkers.print()
                 print("selected_move ", selected_move)
                 for i in checkers.get_possible_moves():
                     print(i)

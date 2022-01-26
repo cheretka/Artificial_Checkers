@@ -21,11 +21,10 @@ if __name__ == "__main__":
     a_play_games.ile_good = n3
 
 
-
     for i in range(1, 100000):
 
         # play
-        # play_rand_game_and_write_moves()
+        play_rand_game_and_write_moves()
 
         # fit
         fit_piece_network_bad_choice()
@@ -34,5 +33,5 @@ if __name__ == "__main__":
         fit_move_network_good_choice()
 
         # check
-        if i % 100 == 0:
+        if i % 10 == 0:
             play_game_and_write_moves()
