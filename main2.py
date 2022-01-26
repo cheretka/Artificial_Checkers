@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
 
 
-    for i in range(1):
+    for i in range(1, 100000):
 
         # play
         # play_rand_game_and_write_moves()
@@ -34,4 +34,5 @@ if __name__ == "__main__":
         fit_move_network_good_choice()
 
         # check
-        # play_game_and_write_moves()
+        if i % 100 == 0:
+            play_game_and_write_moves()
