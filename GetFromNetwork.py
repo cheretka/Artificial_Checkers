@@ -1,7 +1,7 @@
 import NetworkMove
 import NetworkPiece
 import copy
-import main2
+# import main2
 import numpy as np
 import math
 from Savery import *
@@ -9,15 +9,13 @@ import random
 
 count_of_bad_moves = 0
 
-
-def get_count_of_bad_moves():
-    global count_of_bad_moves
-    return count_of_bad_moves
-
-
 def zero_count_of_bad_moves():
     global count_of_bad_moves
     count_of_bad_moves = 0
+    return count_of_bad_moves
+
+def get_count_of_bad_moves():
+    global count_of_bad_moves
     return count_of_bad_moves
 
 
@@ -234,3 +232,28 @@ def get_rezult_from_rand(checkers):
     good_move = math.floor(rand_move[1][0] * 4 + rand_move[1][1] / 2)
 
     return num_list, good_piece, good_move;
+
+
+def write_to_file(board_1, piece_1, move_1, board_2, piece_2, move_2):
+    global data_correct_board_1
+    global data_correct_piece_1
+    global data_correct_move_1
+    global data_correct_board_2
+    global data_correct_piece_2
+    global data_correct_move_2
+
+    if len(data_correct_piece_1) >= 10000:
+
+        data_correct_board_1 = np.delete(data_correct_board_1, range(3000), axis = 0)
+        data_correct_piece_1 = np.delete(data_correct_piece_1, range(3000), axis = 0)
+        data_correct_move_1 = np.delete(data_correct_move_1, range(3000), axis = 0)
+        data_correct_board_2 = np.delete(data_correct_board_2, range(3000), axis = 0)
+        data_correct_piece_2 = np.delete(data_correct_piece_2, range(3000), axis = 0)
+        data_correct_move_2 = np.delete(data_correct_move_2, range(3000), axis = 0)
+
+    data_correct_board_1 = np.append(data_correct_board_1, board_1)
+    data_correct_piece_1 = np.append(data_correct_piece_1, piece_1)
+    data_correct_move_1 = np.append(data_correct_move_1, move_1)
+    data_correct_board_2 = np.append(data_correct_board_2, board_2)
+    data_correct_piece_2 = np.append(data_correct_piece_2, piece_2)
+    data_correct_move_2 = np.append(data_correct_move_2, move_2)
