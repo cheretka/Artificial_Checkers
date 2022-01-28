@@ -462,10 +462,9 @@ def play_game_and_write_moves():
 
     global count_of_bad_moves
     print(count_of_bad_moves)
-    num = np.array([count_of_bad_moves])
-    file = open("results bad moves", "a+")
-    np.savetxt(file, num)
-    file.close()
+    f = open("results bad moves", "a+")
+    f.write(str(count_of_bad_moves))
+    f.close()
     count_of_bad_moves = 0
 
 

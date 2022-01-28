@@ -2,6 +2,59 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from Savery import *
 import random
+from a_play_games import *
+from ab_fit_all_models import *
+import GetFromNetwork
+import numpy as np
+import math
+import a_play_games
+
+
+if __name__ == "__main__":
+
+    fit_piece_network_bad_choice()
+    fit_move_network_bad_choice()
+    fit_piece_network_good_choice()
+    fit_move_network_good_choice()
+
+    print("end")
+
+
+
+    # checkers = Checkers_state()
+    # model_piece = keras.models.load_model("model_piece_3")
+    # model_move = keras.models.load_model("model_move_3")
+    #
+    # checkers.board = [[' ', 'r', ' ', ' ', ' ', 'r', ' ', 'r'],
+    #               [' ', ' ', 'r', ' ', ' ', ' ', ' ', ' '],
+    #               [' ', 'a', ' ', ' ', ' ', 'r', ' ', 'r'],
+    #               [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    #               [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'a'],
+    #               [' ', ' ', ' ', ' ', 'r', ' ', ' ', ' '],
+    #               [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'a'],
+    #               ['a', ' ', 'R', ' ', 'a', ' ', 'a', ' ']]
+    #
+    # checkers.print()
+    # checkers.current_player = "a"
+    #
+    # a_board_2, a_piece_2, a_move_2 = get_rezult_from_network(checkers, model_piece, model_move, 0)
+    # print(a_board_2)
+    # print(a_piece_2)
+    # print(a_move_2)
+    #
+    # x1 = math.floor(a_piece_2 / 4)
+    # x2 = ((a_piece_2 % 4) * 2 + 1) if x1 % 2 == 0 else ((a_piece_2 % 4) * 2)
+    # y1 = math.floor(a_move_2 / 4)
+    # y2 = ((a_move_2 % 4) * 2 + 1) if y1 % 2 == 0 else ((a_move_2 % 4) * 2)
+    # # selected_move1 = [[x1, x2], [y1, y2]]
+    # selected_move = [[7 - x1, 7 - x2], [7 - y1, 7 - y2]]
+    # print(selected_move)
+
+    # possible_moves = checkers.get_possible_moves()
+    # selected_move = random.choice(possible_moves)
+    #
+    # checkers = checkers.make_move(selected_move)
+    # checkers.print(selected_move[0])
 
 
 #
