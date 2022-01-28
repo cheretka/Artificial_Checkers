@@ -125,6 +125,7 @@ def get_move_from_network(checkers):
     model.save("model_piece_3")
 
     return [[x1, x2], [y1, y2]]
+
 def test_network():
     model = keras.models.load_model("model_piece_3")
 
@@ -170,6 +171,11 @@ def test_network():
 
 if __name__ == "__main__":
     create_network()
+
+    # model = keras.models.load_model("model_piece_3")
+    # dot_img_file = '/tmp/model_1.png'
+    # keras.utils.plot_model(model, to_file = dot_img_file, show_shapes = True)
+
 
     # fit_network()
 
