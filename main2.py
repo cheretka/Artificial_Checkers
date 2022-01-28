@@ -463,7 +463,7 @@ def play_game_and_write_moves():
     global count_of_bad_moves
     print(count_of_bad_moves)
     f = open("results bad moves", "a+")
-    f.write(str(count_of_bad_moves))
+    f.write(str(count_of_bad_moves)+"\n")
     f.close()
     count_of_bad_moves = 0
 
