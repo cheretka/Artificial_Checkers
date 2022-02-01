@@ -19,7 +19,7 @@ class Checkers_state:
         self.steps_without_hitting = {"r": 0, "a": 0}
 
 
-    def print(self, last_move = [-1, -1]):
+    def printi(self, last_move = [-1, -1]):
 
         # print(self.get_current_player() + " moves:")
 

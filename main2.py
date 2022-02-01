@@ -28,7 +28,7 @@ model_piece = 0
 model_move = 0
 
 count_of_bad_moves = 0
-
+count_of_good_moves = 0
 
 def initialization():
     global data_correct_board_1
@@ -147,7 +147,7 @@ def fit_piece_network_bad_choice():
     # print(data_p_faulty_piece.shape)
     
     # board
-    rand_indexes = random.sample(range(len( data_p_faulty_piece) - 1), 2048)
+    rand_indexes = random.sample(range(len( data_p_faulty_piece) - 1), 1024)
     input_boards = []
     for index in rand_indexes:
         input_boards.append( data_p_faulty_board[index])
@@ -161,7 +161,7 @@ def fit_piece_network_bad_choice():
     # model
     output_pieces = model_piece.predict(input_boards)
 
-    for i in range(2048):
+    for i in range(1024):
         output_pieces[i][train_pieces[i]] = -1
 
     model_piece.fit(input_boards, y = output_pieces, batch_size = 32, epochs = 1, verbose = 0)
@@ -176,18 +176,18 @@ def fit_move_network_bad_choice():
     data_m_faulty_board = data_m_faulty_board.reshape(-1, 32)
     
     # board
-    rand_indexes = random.sample(range(len(data_m_faulty_piece) - 1), 4096)
+    rand_indexes = random.sample(range(len(data_m_faulty_piece) - 1), 1024)
     input_boards = []
     for index in rand_indexes:
         input_boards.append(data_m_faulty_board[index])
     input_boards = np.array(input_boards).astype('float32') / 5
 
     # piece
-    input_pieces = np.zeros((4096, 32))
+    input_pieces = np.zeros((1024, 32))
     train_pieces = []
     for index in rand_indexes:
         train_pieces.append( data_m_faulty_piece[index])
-    for i in range(4096):
+    for i in range(1024):
         input_pieces[i][train_pieces[i]] = 1
 
     # move
@@ -198,7 +198,7 @@ def fit_move_network_bad_choice():
     # model
     output_moves = model_move.predict([input_boards, input_pieces])
 
-    for i in range(4096):
+    for i in range(1024):
         output_moves[i][train_moves[i]] = -1
 
     model_move.fit([input_boards, input_pieces], y = output_moves, batch_size = 32,
@@ -373,6 +373,8 @@ def check(network_move, all_moves):
 def play_game_and_write_moves():
     global model_piece
     global model_move
+    global count_of_bad_moves
+    global count_of_good_moves
 
     checkers = Checkers_state()
     r_board_1, r_piece_1, r_move_1, a_board_1, a_piece_1, a_move_1 = None, None, None, None, None, None
@@ -413,13 +415,14 @@ def play_game_and_write_moves():
         if selected_move is None:
             print("\n-------- the selected move is not possible -> MCTS  \n", "board\n",
                   checkers.current_player, checkers.board)
-            checkers.print()
+            checkers.printi()
             print("selected_move ", out_piece_2, "  ", out_move_2)
             for i in checkers.get_possible_moves():
                 print(i)
             exit()
 
         checkers = checkers.make_move(selected_move)
+        count_of_good_moves += 1
 
     board_2 = [[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
                [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -460,12 +463,16 @@ def play_game_and_write_moves():
         write_to_file(r_board_1, r_piece_1, r_move_1, num_list, 1, 50)
         write_to_file(a_board_1, a_piece_1, a_move_1, num_list, 1, 50)
 
-    global count_of_bad_moves
-    print(count_of_bad_moves)
+
+    print(count_of_bad_moves, " ", count_of_good_moves)
     f = open("results bad moves", "a+")
     f.write(str(count_of_bad_moves)+"\n")
     f.close()
     count_of_bad_moves = 0
+    f = open("results good moves", "a+")
+    f.write(str(count_of_good_moves) + "\n")
+    f.close()
+    count_of_good_moves = 0
 
 
 def play_rand_game_and_write_moves():
@@ -488,7 +495,7 @@ def play_rand_game_and_write_moves():
 
         if checkers.get_current_player() == 'r':
 
-            if random.randint(1, 3) == 1:
+            if random.randint(1, 2) == 1:
                 r_board_2, r_piece_2, r_move_2 = get_rezult_from_rand(checkers)
             else:
                 r_board_2, r_piece_2, r_move_2 = get_rezult_from_network(checkers, 0)
@@ -509,7 +516,7 @@ def play_rand_game_and_write_moves():
 
         else:
 
-            if random.randint(1, 3) == 1:
+            if random.randint(1, 2) == 1:
                 a_board_2, a_piece_2, a_move_2 = get_rezult_from_rand(checkers)
             else:
                 a_board_2, a_piece_2, a_move_2 = get_rezult_from_network(checkers, 0)
@@ -534,7 +541,7 @@ def play_rand_game_and_write_moves():
         if selected_move is None:
             print("\n-------- the selected move is not possible -> MCTS  \n", "board\n", checkers.current_player)
             print(checkers.board)
-            checkers.print()
+            checkers.printi()
             print("selected_move ", selected_move)
             for i in checkers.get_possible_moves():
                 print(i)
@@ -599,6 +606,8 @@ def write_to_file_bad_move(board, piece, move):
     global data_m_faulty_piece
     global data_m_faulty_move
 
+    # print(data_m_faulty_piece)
+    # print(data_m_faulty_piece.shape)
     if len(data_m_faulty_piece) >= 100000:
         data_m_faulty_board = np.delete(data_m_faulty_board, range(30000), axis = 0)
         data_m_faulty_piece = np.delete(data_m_faulty_piece, range(30000), axis = 0)
@@ -670,7 +679,7 @@ def get_rezult_from_network(checkers, is_net_and_net):
     good_piece = 0
     for iter in range(1, 33):
         piece = np.argmax(predictions_piece)
-        predictions_piece[piece] = -10
+        predictions_piece[piece] = min(predictions_piece) - 1
         x1 = math.floor(piece / 4)
         x2 = ((piece % 4) * 2 + 1) if x1 % 2 == 0 else ((piece % 4) * 2)
         select_piece = [x1, x2]
@@ -698,7 +707,7 @@ def get_rezult_from_network(checkers, is_net_and_net):
 
     for iter in range(1, 33):
         move = np.argmax(predictions_move)
-        predictions_move[move] = -10
+        predictions_move[move] = min(predictions_move) - 1
         y1 = math.floor(move / 4)
         y2 = ((move % 4) * 2 + 1) if y1 % 2 == 0 else ((move % 4) * 2)
         it_found = False
@@ -780,7 +789,9 @@ if __name__ == "__main__":
 
     initialization()
 
-    for i in range(1, 32):
+
+
+    for i in range(1, 100000):
 
         # play
         play_rand_game_and_write_moves()
@@ -792,11 +803,11 @@ if __name__ == "__main__":
         fit_move_network_good_choice()
 
 
-        # # check
-        if i % 1 == 0:
+        #  check
+        if i % 10 == 0:
             play_game_and_write_moves()
 
 
         # save models and data to files
-        if i % 10 == 0:
+        if i % 100 == 0:
             save_data()

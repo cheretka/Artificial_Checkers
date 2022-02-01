@@ -8,16 +8,30 @@ import GetFromNetwork
 import numpy as np
 import math
 import a_play_games
+import main2
 
 
 if __name__ == "__main__":
 
-    fit_piece_network_bad_choice()
-    fit_move_network_bad_choice()
-    fit_piece_network_good_choice()
-    fit_move_network_good_choice()
+    initialization()
 
-    print("end")
+    checkers = Checkers_state()
+
+    checkers.board = [[' ', ' ', ' ', ' ', ' ', 'r', ' ', 'r'], [' ', ' ', 'r', ' ', ' ', ' ', ' ', ' '],
+     [' ', 'a', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', 'a', ' ', ' ', ' ', 'r', ' '],
+     [' ', 'a', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', 'r', ' '],
+     [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], ['a', ' ', 'a', ' ', 'a', ' ', 'a', ' ']]
+
+    checkers.current_player = "a"
+
+    print(get_rezult_from_network(checkers, 1))
+
+    # fit_piece_network_bad_choice()
+    # fit_move_network_bad_choice()
+    # fit_piece_network_good_choice()
+    # fit_move_network_good_choice()
+    #
+    # print("end")
 
 
 

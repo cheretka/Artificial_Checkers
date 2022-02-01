@@ -14,9 +14,13 @@ def create_network():
 
     hidden_layer_1 = layers.Dense(64, activation='relu', name='dense_1')(input_layer_concatenate)
     hidden_layer_2 = layers.Dense(128, activation='relu', name='dense_2')(hidden_layer_1)
-    hidden_layer_3 = layers.Dense(64, activation='relu', name='dense_3')(hidden_layer_2)
+    hidden_layer_3 = layers.Dense(512, activation='relu', name='dense_3')(hidden_layer_2)
+    hidden_layer_4 = layers.Dense(1024, activation='relu', name='dense_4')(hidden_layer_3)
+    hidden_layer_5 = layers.Dense(512, activation='relu', name='dense_5')(hidden_layer_4)
+    hidden_layer_6 = layers.Dense(128, activation='relu', name='dense_6')(hidden_layer_5)
+    hidden_layer_7 = layers.Dense(64, activation='relu', name='dense_7')(hidden_layer_6)
 
-    output_move = layers.Dense(32, activation='softmax', name='move')(hidden_layer_3)
+    output_move = layers.Dense(32, name='move')(hidden_layer_7)
 
     model = keras.Model(
         inputs=[input_layer_piece, input_layer_board],
