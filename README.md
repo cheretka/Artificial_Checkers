@@ -1,6 +1,7 @@
 #  Applying Deep Reinforcement Learning Algorithms to The Game of Draughts
 
 Student Thesis
+new
 
 Implementation of checkers (draughts) strategy board game with AI
 
